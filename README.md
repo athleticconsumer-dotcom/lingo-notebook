@@ -16,6 +16,7 @@ A fill-in-the-blanks vocabulary notebook for any language, inspired by the Ultim
 - Backup and restore as a JSON file
 - Installable as an app (PWA) with its own icon, works offline
 - Google sign-in with Firestore sync (Firebase project lingo-notebook)
+- Shared notebooks: invite friends with a link, write together live, see who wrote each entry (rules in `firestore.rules`)
 
 All data is stored in the browser (localStorage). No build step: open `index.html` or publish with GitHub Pages.
 

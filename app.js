@@ -46,7 +46,7 @@ const TARGETS = [
 
 // ---------- Interface text (follows the language you know) ----------
 const UI = {
-  en: { install:"Install app", installTip:"Install Lingo Notebook on your phone: it opens like an app, with its own icon, and works offline.", installIos:"On iPhone: tap Share, then “Add to Home Screen”.", my:"My notebooks", sub:"Pick a language you know and one you want to learn. Every word appears in your language with a blank next to it. Fill the blanks and build your own dictionary, topic by topic.",
+  en: { invite:"Invite friends", inviteTitle:"Write together", inviteText:"Send this link to a friend. After signing in with Google, they can fill in the blanks in this notebook with you, live. Next to each entry you see who wrote it.", copy:"Copy link", copied:"Copied!", shareBtn:"Share", members:"Members", you:"you", owner:"owner", remove:"Remove", newLink:"New link (the old one stops working)", leave:"Leave notebook", confirmLeave:"Leave this shared notebook?", confirmRemove:"Remove this person from the notebook?", joinTitle:"You've been invited to a notebook", joinText:"Sign in with Google to write in it together.", signInBtn:"Sign in with Google", joining:"Joining…", joinFail:"This invite link doesn't work (any more). Ask for a new one.", signInFirst:"Sign in with Google first (top right) to share a notebook.", removedMsg:"You no longer have access to a shared notebook.", sharedTag:"shared", loading:"Loading…", shareFail:"Sharing didn't work", close:"Close", inviteMsg:"Let's fill in my language notebook together:", install:"Install app", installTip:"Install Lingo Notebook on your phone: it opens like an app, with its own icon, and works offline.", installIos:"On iPhone: tap Share, then “Add to Home Screen”.", my:"My notebooks", sub:"Pick a language you know and one you want to learn. Every word appears in your language with a blank next to it. Fill the blanks and build your own dictionary, topic by topic.",
     newNb:"New notebook", known:"I know…", knownHint:"The words will be printed in this language.", learn:"I want to learn…", learnHint:"You write this language in the blanks.",
     other:"Other language…", create:"Create notebook", words:"words", filled:"filled", topics:"topics", own:"own words", contents:"Contents",
     review:"Review", back:"Back", onlyBlanks:"Show only empty blanks", ownWords:"My own words", addWord:"+ Add a word", notes:"Notes & dialogues",
@@ -55,7 +55,7 @@ const UI = {
     tap:"Tap to show your answer", knew:"I knew it ✓", again:"Again ↺", finished:"Session finished", restart:"Start again", noFilled:"Fill some blanks first, then come back to review them.",
     all:"All topics", reverse:"Reverse direction", importOk:"Backup restored.", importBad:"This file is not a valid backup.", same:"Choose a different language than the one you know.",
     langName:"Language name", mastered:"mastered", leftPage:"Fill in the blanks", rightPage:"Free page", cards:"cards" },
-  de: { install:"App installieren", installTip:"Installiere Lingo Notebook auf deinem Handy: Es öffnet sich wie eine App, mit eigenem Icon, und funktioniert auch offline.", installIos:"Auf dem iPhone: Teilen antippen, dann „Zum Home-Bildschirm“.", my:"Meine Notizbücher", sub:"Wähle eine Sprache, die du kannst, und eine, die du lernen willst. Jedes Wort steht in deiner Sprache mit einer Lücke daneben. Fülle die Lücken und bau dir Thema für Thema dein eigenes Wörterbuch.",
+  de: { invite:"Freunde einladen", inviteTitle:"Gemeinsam schreiben", inviteText:"Schick diesen Link einem Freund. Nach der Anmeldung mit Google kann er live mit dir die Lücken in diesem Notizbuch ausfüllen. Neben jedem Eintrag siehst du, wer ihn geschrieben hat.", copy:"Link kopieren", copied:"Kopiert!", shareBtn:"Teilen", members:"Mitglieder", you:"du", owner:"Besitzer", remove:"Entfernen", newLink:"Neuer Link (der alte funktioniert dann nicht mehr)", leave:"Notizbuch verlassen", confirmLeave:"Dieses geteilte Notizbuch verlassen?", confirmRemove:"Diese Person aus dem Notizbuch entfernen?", joinTitle:"Du wurdest zu einem Notizbuch eingeladen", joinText:"Melde dich mit Google an, um gemeinsam darin zu schreiben.", signInBtn:"Mit Google anmelden", joining:"Trete bei…", joinFail:"Dieser Einladungslink funktioniert nicht (mehr). Frag nach einem neuen.", signInFirst:"Melde dich zuerst oben rechts mit Google an, um ein Notizbuch zu teilen.", removedMsg:"Du hast keinen Zugriff mehr auf ein geteiltes Notizbuch.", sharedTag:"geteilt", loading:"Lädt…", shareFail:"Teilen hat nicht geklappt", close:"Schließen", inviteMsg:"Lass uns zusammen mein Sprach-Notizbuch ausfüllen:", install:"App installieren", installTip:"Installiere Lingo Notebook auf deinem Handy: Es öffnet sich wie eine App, mit eigenem Icon, und funktioniert auch offline.", installIos:"Auf dem iPhone: Teilen antippen, dann „Zum Home-Bildschirm“.", my:"Meine Notizbücher", sub:"Wähle eine Sprache, die du kannst, und eine, die du lernen willst. Jedes Wort steht in deiner Sprache mit einer Lücke daneben. Fülle die Lücken und bau dir Thema für Thema dein eigenes Wörterbuch.",
     newNb:"Neues Notizbuch", known:"Ich kann…", knownHint:"In dieser Sprache werden die Wörter angezeigt.", learn:"Ich lerne…", learnHint:"Diese Sprache schreibst du in die Lücken.",
     other:"Andere Sprache…", create:"Notizbuch anlegen", words:"Wörter", filled:"ausgefüllt", topics:"Themen", own:"eigene Wörter", contents:"Inhalt",
     review:"Wiederholen", back:"Zurück", onlyBlanks:"Nur leere Lücken zeigen", ownWords:"Meine eigenen Wörter", addWord:"+ Wort hinzufügen", notes:"Notizen & Dialoge",
@@ -64,7 +64,7 @@ const UI = {
     tap:"Tippen, um deine Antwort zu sehen", knew:"Gewusst ✓", again:"Nochmal ↺", finished:"Runde beendet", restart:"Neu starten", noFilled:"Fülle zuerst ein paar Lücken aus, dann kannst du sie hier wiederholen.",
     all:"Alle Themen", reverse:"Richtung umdrehen", importOk:"Backup wiederhergestellt.", importBad:"Diese Datei ist kein gültiges Backup.", same:"Wähle eine andere Sprache als die, die du kannst.",
     langName:"Name der Sprache", mastered:"gewusst", leftPage:"Lücken ausfüllen", rightPage:"Freie Seite", cards:"Karten" },
-  fr: { install:"Installer l’app", installTip:"Installe Lingo Notebook sur ton téléphone : il s’ouvre comme une app, avec sa propre icône, et marche hors ligne.", installIos:"Sur iPhone : touche Partager, puis « Sur l’écran d’accueil ».", my:"Mes cahiers", sub:"Choisis une langue que tu connais et une que tu veux apprendre. Chaque mot apparaît dans ta langue avec un blanc à côté. Remplis les blancs et construis ton propre dictionnaire, thème par thème.",
+  fr: { invite:"Inviter des amis", inviteTitle:"Écrire ensemble", inviteText:"Envoie ce lien à un ami. Après s’être connecté avec Google, il peut remplir les blancs de ce cahier avec toi, en direct. À côté de chaque entrée, tu vois qui l’a écrite.", copy:"Copier le lien", copied:"Copié !", shareBtn:"Partager", members:"Membres", you:"toi", owner:"propriétaire", remove:"Retirer", newLink:"Nouveau lien (l’ancien ne marchera plus)", leave:"Quitter le cahier", confirmLeave:"Quitter ce cahier partagé ?", confirmRemove:"Retirer cette personne du cahier ?", joinTitle:"Tu as été invité à un cahier", joinText:"Connecte-toi avec Google pour y écrire ensemble.", signInBtn:"Se connecter avec Google", joining:"Connexion au cahier…", joinFail:"Ce lien d’invitation ne marche pas (ou plus). Demande un nouveau lien.", signInFirst:"Connecte-toi d’abord avec Google (en haut à droite) pour partager un cahier.", removedMsg:"Tu n’as plus accès à un cahier partagé.", sharedTag:"partagé", loading:"Chargement…", shareFail:"Le partage n’a pas marché", close:"Fermer", inviteMsg:"Remplissons ensemble mon cahier de langue :", install:"Installer l’app", installTip:"Installe Lingo Notebook sur ton téléphone : il s’ouvre comme une app, avec sa propre icône, et marche hors ligne.", installIos:"Sur iPhone : touche Partager, puis « Sur l’écran d’accueil ».", my:"Mes cahiers", sub:"Choisis une langue que tu connais et une que tu veux apprendre. Chaque mot apparaît dans ta langue avec un blanc à côté. Remplis les blancs et construis ton propre dictionnaire, thème par thème.",
     newNb:"Nouveau cahier", known:"Je parle…", knownHint:"Les mots seront affichés dans cette langue.", learn:"J'apprends…", learnHint:"Tu écris cette langue dans les blancs.",
     other:"Autre langue…", create:"Créer le cahier", words:"mots", filled:"remplis", topics:"thèmes", own:"mots perso", contents:"Sommaire",
     review:"Réviser", back:"Retour", onlyBlanks:"Afficher seulement les blancs vides", ownWords:"Mes propres mots", addWord:"+ Ajouter un mot", notes:"Notes & dialogues",
@@ -73,7 +73,7 @@ const UI = {
     tap:"Touche pour voir ta réponse", knew:"Je savais ✓", again:"Encore ↺", finished:"Série terminée", restart:"Recommencer", noFilled:"Remplis d'abord quelques blancs, puis reviens les réviser.",
     all:"Tous les thèmes", reverse:"Inverser le sens", importOk:"Sauvegarde restaurée.", importBad:"Ce fichier n'est pas une sauvegarde valide.", same:"Choisis une autre langue que celle que tu parles.",
     langName:"Nom de la langue", mastered:"maîtrisés", leftPage:"Remplis les blancs", rightPage:"Page libre", cards:"cartes" },
-  ru: { install:"Установить", installTip:"Установи Lingo Notebook на телефон: он открывается как приложение, со своей иконкой, и работает офлайн.", installIos:"На iPhone: нажми «Поделиться», затем «На экран „Домой“».", my:"Мои тетради", sub:"Выбери язык, который знаешь, и язык, который хочешь выучить. Каждое слово написано на твоём языке, а рядом пустое место. Заполняй пропуски и составляй свой словарь, тема за темой.",
+  ru: { invite:"Пригласить друзей", inviteTitle:"Писать вместе", inviteText:"Отправь эту ссылку другу. После входа через Google он сможет вместе с тобой заполнять пропуски в этой тетради в реальном времени. Рядом с каждой записью видно, кто её написал.", copy:"Копировать ссылку", copied:"Скопировано!", shareBtn:"Поделиться", members:"Участники", you:"ты", owner:"владелец", remove:"Удалить", newLink:"Новая ссылка (старая перестанет работать)", leave:"Выйти из тетради", confirmLeave:"Выйти из этой общей тетради?", confirmRemove:"Удалить этого человека из тетради?", joinTitle:"Тебя пригласили в тетрадь", joinText:"Войди через Google, чтобы писать в ней вместе.", signInBtn:"Войти через Google", joining:"Подключение…", joinFail:"Эта ссылка не работает. Попроси новую.", signInFirst:"Сначала войди через Google (вверху справа), чтобы поделиться тетрадью.", removedMsg:"У тебя больше нет доступа к общей тетради.", sharedTag:"общая", loading:"Загрузка…", shareFail:"Не удалось поделиться", close:"Закрыть", inviteMsg:"Давай вместе заполнять мою языковую тетрадь:", install:"Установить", installTip:"Установи Lingo Notebook на телефон: он открывается как приложение, со своей иконкой, и работает офлайн.", installIos:"На iPhone: нажми «Поделиться», затем «На экран „Домой“».", my:"Мои тетради", sub:"Выбери язык, который знаешь, и язык, который хочешь выучить. Каждое слово написано на твоём языке, а рядом пустое место. Заполняй пропуски и составляй свой словарь, тема за темой.",
     newNb:"Новая тетрадь", known:"Я знаю…", knownHint:"Слова будут показаны на этом языке.", learn:"Я учу…", learnHint:"На этом языке ты пишешь в пропусках.",
     other:"Другой язык…", create:"Создать тетрадь", words:"слов", filled:"заполнено", topics:"тем", own:"своих слов", contents:"Содержание",
     review:"Повторить", back:"Назад", onlyBlanks:"Только пустые строки", ownWords:"Мои слова", addWord:"+ Добавить слово", notes:"Заметки и диалоги",
@@ -99,7 +99,19 @@ function save(flash, fromCloud) {
   if (!fromCloud && window.LN && LN.onSave) LN.onSave(S);
   if (flash) { const el = document.querySelector(".saved"); if (el) { el.classList.add("on"); clearTimeout(saveTimer); saveTimer = setTimeout(() => el.classList.remove("on"), 1200); } }
 }
-const D = id => (S.data[id] ||= { answers: {}, custom: {}, notes: {}, mastered: {} });
+const D = id => { const d = (S.data[id] ||= {}); d.answers ||= {}; d.custom ||= {}; d.notes ||= {}; d.mastered ||= {}; d.authors ||= {}; return d; };
+// Shared notebooks: every change is also sent to the cloud notebook (firebase-sync.js does the sending).
+const cloudEdit = (nb, path, value) => { if (nb.shared && window.LN && LN.cloud) LN.cloud.edit(nb.id, path, value); };
+const myUid = () => (window.LN && LN.cloud && LN.cloud.uid()) || null;
+const colorFor = uid => COVERS[[...String(uid)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % COVERS.length];
+function badge(nb, tid, i) {
+  if (!nb.shared) return "";
+  const a = (D(nb.id).authors[tid] || {})[i];
+  if (!a || a === myUid()) return "";
+  const m = (nb.memberInfo || {})[a] || {};
+  return ` <span class="by" style="background:${colorFor(a)}" title="${esc(m.name || "")}">${esc((m.name || "?").trim()[0] || "?")}</span>`;
+}
+let refreshTopic = null; // set while a topic page is open, so live changes from friends can be shown without losing focus
 const nbById = id => S.notebooks.find(n => n.id === id);
 
 // ---------- Helpers ----------
@@ -134,6 +146,8 @@ const ring = (p, color) => {
 function route() {
   const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
   document.body.classList.remove("print-blank");
+  refreshTopic = null; closeModal();
+  if (parts[0] === "join") return viewJoin(parts[1], parts[2]);
   const nb = parts[1] && nbById(parts[1]);
   if (nb) setUi(nb.known);
   if (parts[0] === "new") return viewSetup();
@@ -158,7 +172,7 @@ function viewHome() {
     const known = KNOWN.find(k => k.code === nb.known);
     return `<a class="cover" href="#/nb/${nb.id}" style="background:${nb.color || COVERS[i % COVERS.length]}">
       <div class="lbl"><small>${esc(known.native)} → </small><strong dir="auto">${esc(nb.targetName)}</strong></div>
-      <div class="meta">${s.filled} / ${s.total} ${UI[nb.known].words}${s.own ? ` · +${s.own}` : ""}<div class="mini-bar"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div></a>`;
+      <div class="meta">${nb.shared ? `<div class="shared-tag">👥 ${UI[nb.known].sharedTag} · ${(nb.members || []).length || 1}</div>` : ""}${s.filled} / ${s.total} ${UI[nb.known].words}${s.own ? ` · +${s.own}` : ""}<div class="mini-bar"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div></a>`;
   }).join("");
   const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
   const tip = (installEvent || ios) ? `<div class="install-tip"><img src="icons/icon-192.png" alt=""><div style="flex:1;min-width:200px">${L.installTip}${!installEvent && ios ? `<br><b>${L.installIos}</b>` : ""}</div>
@@ -209,7 +223,7 @@ function viewSetup() {
 function notebookMenu(nb) {
   return `<a class="btn small" href="#/nb/${nb.id}/review">🃏 ${L.review}</a>
   <div class="menu" id="menu"><button class="btn small ghost" id="menuBtn" aria-label="More">⋯</button>
-    <div class="menu-list"><button data-act="backup">⬇ ${L.backup}</button><button data-act="import">⬆ ${L.imp}</button><div class="sep"></div><button data-act="delete" style="color:var(--red)">🗑 ${L.del}</button></div></div>`;
+    <div class="menu-list"><button data-act="backup">⬇ ${L.backup}</button><button data-act="import">⬆ ${L.imp}</button><div class="sep"></div>${nb.shared && nb.owner !== myUid() ? `<button data-act="leave" style="color:var(--red)">🚪 ${L.leave}</button>` : `<button data-act="delete" style="color:var(--red)">🗑 ${L.del}</button>`}</div></div>`;
 }
 function wireMenu(nb) {
   const m = $("#menu"); if (!m) return;
@@ -219,7 +233,14 @@ function wireMenu(nb) {
     const act = b.dataset.act;
     if (act === "backup") downloadBackup();
     if (act === "import") $("#importFile").click();
-    if (act === "delete" && confirm(L.confirmDel)) { S.notebooks = S.notebooks.filter(n => n.id !== nb.id); delete S.data[nb.id]; save(); location.hash = "#/"; }
+    if (act === "delete" && confirm(L.confirmDel)) {
+      if (nb.shared && LN.cloud) LN.cloud.deleteShared(nb).catch(e => console.warn(e));
+      removeNotebook(nb.id); location.hash = "#/";
+    }
+    if (act === "leave" && confirm(L.confirmLeave)) {
+      if (LN.cloud) LN.cloud.leave(nb).catch(e => console.warn(e));
+      removeNotebook(nb.id); location.hash = "#/";
+    }
   });
 }
 function viewNotebook(nb) {
@@ -237,7 +258,8 @@ function viewNotebook(nb) {
         <div class="stat"><b>${s.own}</b><span>${L.own}</span></div>
         <div class="stat"><b>${s.mastered}</b><span>${L.mastered}</span></div>
         <div class="stat"><b>${TOPICS.length}</b><span>${L.topics}</span></div>
-      </div></div></div>
+      </div></div>
+      <div class="members-box">${membersRow(nb)}<button class="btn small" id="inviteBtn">👥 ${L.invite}</button></div></div>
     <h2>${L.contents}</h2>
     <div class="contents">${TOPICS.map((t, i) => {
       const ts = topicStats(nb, t), tp = ts.filled / ts.total;
@@ -245,15 +267,83 @@ function viewNotebook(nb) {
         <span class="n">${i + 1}</span><span class="ic">${t.icon}</span><span class="t">${esc(topicName(t, nb.known))}</span>
         <span class="c">${ts.filled}/${ts.total}${ts.own ? ` +${ts.own}` : ""}</span>${ring(tp, tp === 1 ? "var(--green)" : "var(--blue)")}</a>`;
     }).join("")}</div>`;
+  $("#inviteBtn").onclick = () => openShare(nb);
 }
+
+function membersRow(nb) {
+  if (!nb.shared) return "";
+  const info = nb.memberInfo || {};
+  return `<div class="avatars" title="${L.members}">${(nb.members || []).map(uid => {
+    const m = info[uid] || {};
+    return m.photo ? `<img src="${esc(m.photo)}" alt="" title="${esc(m.name || "")}" referrerpolicy="no-referrer" style="border-color:${colorFor(uid)}">`
+      : `<span class="av" style="background:${colorFor(uid)}" title="${esc(m.name || "")}">${esc((m.name || "?")[0])}</span>`;
+  }).join("")}</div>`;
+}
+
+// ---------- Sharing ----------
+let modalEl = null;
+function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; } }
+function modal(html) {
+  closeModal();
+  modalEl = document.createElement("div");
+  modalEl.className = "modal-bg";
+  modalEl.innerHTML = `<div class="modal" role="dialog">${html}</div>`;
+  modalEl.onclick = e => { if (e.target === modalEl) closeModal(); };
+  document.body.appendChild(modalEl);
+  return modalEl;
+}
+async function openShare(nb) {
+  if (!myUid()) { alert(L.signInFirst); if (LN.cloud) LN.cloud.signIn(); return; }
+  if (!nb.shared) {
+    modal(`<p class="muted">${L.loading}</p>`);
+    try { await LN.cloud.share(nb); } catch (e) { console.warn(e); closeModal(); return alert(`${L.shareFail}: ${e.code || e.message}`); }
+  }
+  drawShare(nb);
+}
+function drawShare(nb) {
+  const link = `${location.origin}${location.pathname}#/join/${nb.id}/${nb.inviteCode}`;
+  const isOwner = nb.owner === myUid(), info = nb.memberInfo || {};
+  const m = modal(`<h2>👥 ${L.inviteTitle}</h2><p class="muted">${L.inviteText}</p>
+    <div class="row" style="flex-wrap:nowrap"><input class="field" id="invLink" readonly value="${esc(link)}"><button class="btn primary" id="copyLink">${L.copy}</button></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="shareLink">📤 ${L.shareBtn}</button>
+      <a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(L.inviteMsg + " " + link)}">💬 WhatsApp</a></div>
+    <div class="section-lbl" style="margin-top:20px">${L.members}</div>
+    <ul class="mem-list">${(nb.members || []).map(uid => { const p = info[uid] || {}; return `<li>
+      ${p.photo ? `<img src="${esc(p.photo)}" alt="" referrerpolicy="no-referrer">` : `<span class="av" style="background:${colorFor(uid)}">${esc((p.name || "?")[0])}</span>`}
+      <span style="flex:1">${esc(p.name || "?")}${uid === myUid() ? ` (${L.you})` : ""}${uid === nb.owner ? ` · <small class="muted">${L.owner}</small>` : ""}</span>
+      ${isOwner && uid !== nb.owner ? `<button class="btn small ghost" data-rm="${uid}">${L.remove}</button>` : ""}</li>`; }).join("")}</ul>
+    <div class="row" style="justify-content:space-between;margin-top:16px">
+      ${isOwner ? `<button class="btn small ghost" id="newLink">↻ ${L.newLink}</button>` : "<span></span>"}
+      <button class="btn small" id="closeM">${L.close}</button></div>`);
+  m.querySelector("#closeM").onclick = closeModal;
+  m.querySelector("#copyLink").onclick = async e => { try { await navigator.clipboard.writeText(link); } catch { m.querySelector("#invLink").select(); document.execCommand("copy"); } e.target.textContent = L.copied; };
+  m.querySelector("#shareLink").onclick = () => navigator.share ? navigator.share({ title: "Lingo Notebook", text: L.inviteMsg, url: link }).catch(() => {}) : m.querySelector("#copyLink").click();
+  const nl = m.querySelector("#newLink"); if (nl) nl.onclick = async () => { await LN.cloud.resetInvite(nb); drawShare(nb); };
+  m.querySelectorAll("[data-rm]").forEach(b => b.onclick = async () => { if (confirm(L.confirmRemove)) { await LN.cloud.removeMember(nb, b.dataset.rm); drawShare(nb); } });
+}
+function viewJoin(id, code) {
+  setBar("");
+  const have = nbById(id);
+  if (have && have.shared) return (location.hash = `#/nb/${id}`);
+  const box = (inner) => app.innerHTML = `<div class="join"><img src="icons/icon-192.png" alt=""><h1>${L.joinTitle}</h1>${inner}</div>`;
+  if (!LN.cloud || !LN.cloud.ready()) return box(`<p class="muted">${L.loading}</p>`);
+  if (!myUid()) { box(`<p class="muted">${L.joinText}</p><button class="btn primary" id="joinIn">${L.signInBtn}</button>`); $("#joinIn").onclick = () => LN.cloud.signIn(); return; }
+  box(`<p class="muted">${L.joining}</p>`);
+  LN.cloud.join(id, code).then(() => { location.hash = `#/nb/${id}`; })
+    .catch(e => { console.warn(e); box(`<p>${L.joinFail}</p><a class="btn" href="#/">← ${L.my}</a>`); });
+}
+window.addEventListener("ln-auth", () => { if (location.hash.startsWith("#/join/")) route(); else if (onHome()) viewHome(); });
+function removeNotebook(id) { S.notebooks = S.notebooks.filter(n => n.id !== id); delete S.data[id]; save(); }
 
 // ---------- Topic (the two-page spread) ----------
 function viewTopic(nb, tid) {
   const idx = TOPICS.findIndex(t => t.id === tid);
   if (idx < 0) return (location.hash = `#/nb/${nb.id}`);
-  const t = TOPICS[idx], d = D(nb.id);
-  const ans = (d.answers[t.id] ||= {});
-  const own = (d.custom[t.id] ||= []);
+  const t = TOPICS[idx];
+  // Always read the current data (a friend's change can replace these objects at any time).
+  const d = () => D(nb.id);
+  const ans = () => (d().answers[t.id] ||= {});
+  const own = () => (d().custom[t.id] ||= []);
   setBar(notebookMenu(nb)); wireMenu(nb);
   const prev = TOPICS[idx - 1], next = TOPICS[idx + 1];
 
@@ -271,9 +361,9 @@ function viewTopic(nb, tid) {
       <section class="page">
         <div class="page-title"><h2>${t.icon} ${idx + 1}. ${esc(topicName(t, nb.known))}</h2><small id="count"></small></div>
         <ul class="wl">${t.words.map((row, i) => {
-          const v = ans[i] || "";
+          const v = ans()[i] || "";
           const w = word(row, nb.known).replace(/\(([^)]+)\)/g, "<em>($1)</em>");
-          return `<li class="w ${v.trim() ? "filled" : ""}" data-i="${i}"><div class="p">${w}</div>
+          return `<li class="w ${v.trim() ? "filled" : ""}" data-i="${i}"><div class="p">${w}${badge(nb, t.id, i)}</div>
             <input class="blank" dir="auto" data-i="${i}" value="${esc(v)}" autocomplete="off" spellcheck="false" aria-label="${esc(word(row, nb.known))}"></li>`;
         }).join("")}</ul>
       </section>
@@ -283,7 +373,7 @@ function viewTopic(nb, tid) {
         <div id="ownList"></div>
         <button class="btn small" id="addOwn" style="margin-top:6px">${L.addWord}</button>
         <div><div class="section-lbl">${L.notes}</div></div>
-        <textarea class="notes" id="notes" dir="auto" spellcheck="false">${esc(d.notes[t.id] || "")}</textarea>
+        <textarea class="notes" id="notes" dir="auto" spellcheck="false">${esc(d().notes[t.id] || "")}</textarea>
       </section>
     </div>
     <div class="pager">
@@ -299,9 +389,12 @@ function viewTopic(nb, tid) {
   inputs.forEach((inp, k) => {
     inp.addEventListener("input", () => {
       const i = inp.dataset.i;
-      if (inp.value.trim()) ans[i] = inp.value; else delete ans[i];
-      delete d.mastered[`${t.id}:${i}`];
+      const filled = !!inp.value.trim();
+      if (filled) ans()[i] = inp.value; else delete ans()[i];
+      if (nb.shared) { const au = (d().authors[t.id] ||= {}); if (filled) au[i] = myUid(); else delete au[i]; }
+      delete d().mastered[`${t.id}:${i}`];
       save(true); count();
+      cloudEdit(nb, ["answers", t.id, i], filled ? inp.value : null);
     });
     inp.addEventListener("blur", () => inp.closest(".w").classList.toggle("filled", !!inp.value.trim()));
     inp.addEventListener("keydown", e => {
@@ -316,19 +409,35 @@ function viewTopic(nb, tid) {
 
   // Own words on the free page.
   const drawOwn = () => {
-    $("#ownList").innerHTML = own.map((c, i) => `<div class="own" data-o="${i}">
+    $("#ownList").innerHTML = own().map((c, i) => `<div class="own" data-o="${i}">
       <input class="p-in" dir="auto" placeholder="${L.promptPh}" value="${esc(c.p)}" data-f="p">
       <input class="blank" dir="auto" placeholder="${L.answerPh}" value="${esc(c.a)}" data-f="a">
       <button class="x" title="✕">✕</button></div>`).join("");
     $("#ownList").querySelectorAll(".own").forEach(row => {
       const i = +row.dataset.o;
-      row.querySelectorAll("input").forEach(inp => inp.oninput = () => { own[i][inp.dataset.f] = inp.value; save(true); });
-      row.querySelector(".x").onclick = () => { own.splice(i, 1); save(true); drawOwn(); };
+      row.querySelectorAll("input").forEach(inp => inp.oninput = () => { own()[i][inp.dataset.f] = inp.value; save(true); cloudEdit(nb, ["custom", t.id], own()); });
+      row.querySelector(".x").onclick = () => { own().splice(i, 1); save(true); cloudEdit(nb, ["custom", t.id], own()); drawOwn(); };
     });
   };
   drawOwn();
-  $("#addOwn").onclick = () => { own.push({ p: "", a: "" }); save(); drawOwn(); $("#ownList .own:last-child input").focus(); };
-  $("#notes").oninput = e => { d.notes[t.id] = e.target.value; save(true); };
+  $("#addOwn").onclick = () => { own().push({ p: "", a: "" }); save(); cloudEdit(nb, ["custom", t.id], own()); drawOwn(); $("#ownList .own:last-child input").focus(); };
+  $("#notes").oninput = e => { d().notes[t.id] = e.target.value; save(true); cloudEdit(nb, ["notes", t.id], e.target.value); };
+
+  // Live updates from friends: refresh everything except the field you are typing in.
+  refreshTopic = id => {
+    if (id !== nb.id) return;
+    const focus = document.activeElement;
+    inputs.forEach(inp => {
+      const i = inp.dataset.i, v = ans()[i] || "", li = inp.closest(".w");
+      if (inp !== focus && inp.value !== v) { inp.value = v; li.classList.toggle("filled", !!v.trim()); }
+      const p = li.querySelector(".p"), old = p.querySelector(".by"), b = badge(nb, t.id, i);
+      if (old) old.remove();
+      if (b) p.insertAdjacentHTML("beforeend", b);
+    });
+    const n = $("#notes"); if (n && n !== focus && n.value !== (d().notes[t.id] || "")) n.value = d().notes[t.id] || "";
+    if (!$("#ownList").contains(focus)) drawOwn();
+    count();
+  };
 
   $("#printBtn").onclick = () => { document.body.classList.remove("print-blank"); window.print(); };
   $("#printBlankBtn").onclick = () => { document.body.classList.add("print-blank"); window.print(); setTimeout(() => document.body.classList.remove("print-blank"), 500); };
@@ -428,6 +537,21 @@ window.LN = {
     return S;
   },
   clear() { S = blankState(); save(false, true); location.hash = "#/"; route(); },
+  // Shared notebooks
+  ui: () => L,
+  rerender() { const h = location.hash; if (h.includes("/t/") || h.includes("/review")) return; route(); },
+  markShared(id, meta) { const nb = nbById(id); if (!nb) return; Object.assign(nb, { shared: true }, meta); save(); },
+  addShared(nb, data) { if (!nbById(nb.id)) S.notebooks.push(nb); LN.applyShared(nb.id, data); },
+  applyShared(id, data) {
+    const nb = nbById(id); if (!nb) return;
+    Object.assign(nb, { shared: true, owner: data.owner, members: data.members || [], memberInfo: data.memberInfo || {}, inviteCode: data.inviteCode || nb.inviteCode,
+      known: data.known || nb.known, targetName: data.targetName || nb.targetName, color: data.color || nb.color });
+    const d = D(id);
+    d.answers = data.answers || {}; d.authors = data.authors || {}; d.custom = data.custom || {}; d.notes = data.notes || {};
+    save(false, true);
+    if (refreshTopic) refreshTopic(id); else LN.rerender();
+  },
+  removeShared(id) { if (!nbById(id)) return; removeNotebook(id); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/"; else route(); },
 };
 
 route();

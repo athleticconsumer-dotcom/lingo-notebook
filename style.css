@@ -170,3 +170,20 @@ select.field{width:auto;padding:7px 10px}
 .install-tip{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:.9rem;color:var(--ink-soft);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .install-tip img{width:40px;height:40px;border-radius:10px}
 @media (display-mode: standalone){.install-tip{display:none}}
+
+/* Sharing */
+.by{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#fff;font-size:.66rem;font-weight:700;margin-left:6px;vertical-align:1px;text-transform:uppercase}
+.shared-tag{font-size:.78rem;margin-bottom:4px;opacity:.95}
+.members-box{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.avatars{display:flex}
+.avatars img,.avatars .av{width:34px;height:34px;border-radius:50%;border:2px solid var(--paper);margin-left:-8px;object-fit:cover}
+.av{display:inline-grid;place-items:center;color:#fff;font-weight:700;font-size:.85rem;text-transform:uppercase;width:32px;height:32px;border-radius:50%;flex:none}
+.modal-bg{position:fixed;inset:0;background:rgba(20,25,35,.45);display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--card);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.25);padding:24px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.modal h2{margin-bottom:6px}
+.mem-list{list-style:none;margin:6px 0 0;padding:0}
+.mem-list li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--grid)}
+.mem-list img{width:32px;height:32px;border-radius:50%}
+.join{max-width:460px;margin:40px auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
+.join img{width:72px;height:72px;border-radius:18px;margin-bottom:12px}
+@media (max-width:820px){.members-box{align-items:flex-start}}

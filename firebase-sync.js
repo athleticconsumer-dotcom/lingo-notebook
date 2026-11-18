@@ -56,14 +56,113 @@ async function load() {
 }
 
 const ref = () => fb.doc(db, COLLECTION, state.user.uid);
+const SHARED = "sharedNotebooks";
+const sref = id => fb.doc(db, SHARED, id);
+
+// The personal document keeps only the list of shared notebooks and your own review progress;
+// the shared words themselves live in the shared notebook document.
+function strip(S) {
+  const c = JSON.parse(JSON.stringify(S));
+  (c.notebooks || []).filter(n => n.shared).forEach(n => {
+    c.data[n.id] = { mastered: (c.data[n.id] || {}).mastered || {} };
+    delete n.memberInfo; delete n.members; delete n.inviteCode;
+  });
+  return c;
+}
 async function push(S) {
   if (!state.user) return;
   setStatus("saving");
   try {
-    await fb.setDoc(ref(), { state: JSON.stringify(S), updated: S.updated || Date.now(), updatedAt: fb.serverTimestamp() });
+    const clean = strip(S);
+    await fb.setDoc(ref(), { state: JSON.stringify(clean), updated: S.updated || Date.now(), updatedAt: fb.serverTimestamp() });
     setStatus("synced");
   } catch (e) { console.warn(e); setStatus("error", e.code || ""); }
 }
+
+// ---------- Shared notebooks ----------
+const me = () => ({ name: state.user.displayName || state.user.email || "?", photo: state.user.photoURL || "" });
+const newCode = () => Array.from(crypto.getRandomValues(new Uint8Array(9)), b => "abcdefghjkmnpqrstuvwxyz23456789"[b % 31]).join("");
+const watchers = new Map();
+const pending = new Map();   // "id|a|b|c" -> { id, path, value }; bundled writes so typing doesn't write on every key
+let flushTimer = null;
+
+function setPath(obj, path, value) {
+  let o = obj;
+  for (let k = 0; k < path.length - 1; k++) o = (o[path[k]] ||= {});
+  if (value === null) delete o[path[path.length - 1]]; else o[path[path.length - 1]] = value;
+}
+function watch(id) {
+  if (watchers.has(id) || !state.user) return;
+  const unsub = fb.onSnapshot(sref(id), snap => {
+    const data = snap.exists() ? snap.data() : null;
+    if (!data || !(data.members || []).includes(state.user.uid)) { unwatch(id); window.LN.removeShared(id); return; }
+    // Keep what you are typing right now (not sent yet) instead of the older cloud value.
+    pending.forEach(p => { if (p.id === id) setPath(data, p.path, p.value); });
+    window.LN.applyShared(id, data);
+  }, e => { console.warn(e); if (e.code === "permission-denied") { unwatch(id); window.LN.removeShared(id); } });
+  watchers.set(id, unsub);
+}
+function unwatch(id) { const u = watchers.get(id); if (u) u(); watchers.delete(id); }
+function watchAll() { (window.LN.get().notebooks || []).filter(n => n.shared).forEach(n => watch(n.id)); }
+
+function edit(id, path, value) {
+  if (!state.user) return;
+  pending.set([id, ...path].join("|"), { id, path, value });
+  if (path[0] === "answers") pending.set([id, "authors", path[1], path[2]].join("|"), { id, path: ["authors", path[1], path[2]], value: value === null ? null : state.user.uid });
+  clearTimeout(flushTimer); state.status = "saving"; render();
+  flushTimer = setTimeout(flush, 800);
+}
+async function flush() {
+  const byId = new Map();
+  pending.forEach(p => { if (!byId.has(p.id)) byId.set(p.id, []); byId.get(p.id).push(p); });
+  pending.clear();
+  for (const [id, list] of byId) {
+    const args = [];
+    list.forEach(p => { args.push(new fb.FieldPath(...p.path.map(String)), p.value === null ? fb.deleteField() : p.value); });
+    try { await fb.updateDoc(sref(id), ...args); setStatus("synced"); }
+    catch (e) { console.warn(e); setStatus("error", e.code || ""); }
+  }
+}
+
+async function share(nb) {
+  const uid = state.user.uid, S = window.LN.get(), d = S.data[nb.id] || {};
+  const authors = {};
+  Object.entries(d.answers || {}).forEach(([t, a]) => { authors[t] = {}; Object.keys(a).forEach(i => authors[t][i] = uid); });
+  const doc = { owner: uid, members: [uid], memberInfo: { [uid]: me() }, inviteCode: newCode(), known: nb.known, targetName: nb.targetName, color: nb.color || "",
+    answers: d.answers || {}, authors, custom: d.custom || {}, notes: d.notes || {}, created: fb.serverTimestamp() };
+  await fb.setDoc(sref(nb.id), doc);
+  window.LN.markShared(nb.id, { owner: uid, members: [uid], memberInfo: doc.memberInfo, inviteCode: doc.inviteCode });
+  watch(nb.id);
+}
+async function join(id, code) {
+  const uid = state.user.uid;
+  await fb.updateDoc(sref(id), "members", fb.arrayUnion(uid), new fb.FieldPath("memberInfo", uid), me(), "lastJoinCode", code);
+  const snap = await fb.getDoc(sref(id));
+  const data = snap.data();
+  window.LN.addShared({ id, known: data.known, targetName: data.targetName, color: data.color, shared: true, created: Date.now() }, data);
+  watch(id);
+}
+async function leave(nb) {
+  const uid = state.user.uid; unwatch(nb.id);
+  await fb.updateDoc(sref(nb.id), "members", fb.arrayRemove(uid), new fb.FieldPath("memberInfo", uid), fb.deleteField());
+}
+async function removeMember(nb, uid) {
+  await fb.updateDoc(sref(nb.id), "members", fb.arrayRemove(uid), new fb.FieldPath("memberInfo", uid), fb.deleteField());
+}
+async function resetInvite(nb) {
+  const code = newCode();
+  await fb.updateDoc(sref(nb.id), "inviteCode", code);
+  nb.inviteCode = code;
+}
+async function deleteShared(nb) { unwatch(nb.id); if (nb.owner === state.user?.uid) await fb.deleteDoc(sref(nb.id)); else await leave(nb); }
+
+let authKnown = false;
+window.LN.cloud = {
+  ready: () => authKnown,
+  uid: () => state.user ? state.user.uid : null,
+  signIn: () => fb ? signIn() : alert(t("err")),
+  edit, share, join, leave, removeMember, resetInvite, deleteShared,
+};
 
 async function signIn() {
   try { await fb.signInWithPopup(auth, new fb.GoogleAuthProvider()); }
@@ -75,6 +174,8 @@ async function signIn() {
 async function signOutNow() {
   if (!confirm(t("outQ"))) return;
   clearTimeout(timer);
+  if (pending.size) await flush();
+  [...watchers.keys()].forEach(unwatch);
   await fb.signOut(auth);
   window.LN.clear();
 }
@@ -82,20 +183,23 @@ async function signOutNow() {
 async function start() {
   render();
   window.addEventListener("hashchange", () => setTimeout(render)); // keeps labels in the notebook's language
-  try { await load(); } catch (e) { console.warn("Firebase not reachable, working offline.", e); return; }
+  try { await load(); } catch (e) { console.warn("Firebase not reachable, working offline.", e); authKnown = true; window.dispatchEvent(new Event("ln-auth")); return; }
   // Every local save is sent to the cloud, bundled so typing doesn't write on every key.
-  window.LN.onSave = S => { if (!state.user) return; clearTimeout(timer); state.status = "saving"; render(); timer = setTimeout(() => push(S), 1200); };
+  window.LN.onSave = S => { if (!state.user) return; clearTimeout(timer); state.status = "saving"; render(); timer = setTimeout(() => push(window.LN.get()), 1200); };
+  window.addEventListener("pagehide", () => { if (pending.size) flush(); });
   fb.onAuthStateChanged(auth, async user => {
     state.user = user; render();
-    if (!user) return;
+    if (!user) { [...watchers.keys()].forEach(unwatch); authKnown = true; window.dispatchEvent(new Event("ln-auth")); return; }
     try {
       const snap = await fb.getDoc(ref());
       const remote = snap.exists() ? JSON.parse(snap.data().state || "null") : null;
       const merged = remote ? window.LN.merge(remote) : window.LN.get();
       // Upload if this device had something the cloud did not.
-      if (!remote || JSON.stringify(merged) !== JSON.stringify(remote)) await push(merged);
+      if (!remote || JSON.stringify(strip(merged)) !== JSON.stringify(remote)) await push(merged);
       else setStatus("synced");
     } catch (e) { console.warn(e); setStatus("error", e.code || ""); }
+    watchAll();
+    authKnown = true; window.dispatchEvent(new Event("ln-auth"));
   });
 }
 start();
