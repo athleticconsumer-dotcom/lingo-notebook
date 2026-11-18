@@ -1,13 +1,13 @@
 // Cloud sync with Firebase: sign in with Google and your notebooks are saved to Firestore,
 // so they are the same on every device. Without signing in, everything still works locally.
-// Uses the Firebase project "dar A" (same as the dar app), collection "lingoNotebook".
+// Firebase project "lingo-notebook" (lingo-notebook-f3854), collection "lingoNotebook".
 const firebaseConfig = {
-  apiKey: "AIzaSyCJwoLkDn2W_uN-hlqjMk6kqbhKdZBPT_g",
-  authDomain: "dar-a-87f01.firebaseapp.com",
-  projectId: "dar-a-87f01",
-  storageBucket: "dar-a-87f01.firebasestorage.app",
-  messagingSenderId: "926469855723",
-  appId: "1:926469855723:web:6676d875c756487afa61ae",
+  apiKey: "AIzaSyAStJmNAN_LgAiK4P-F1xneVX78o-STBII",
+  authDomain: "lingo-notebook-f3854.firebaseapp.com",
+  projectId: "lingo-notebook-f3854",
+  storageBucket: "lingo-notebook-f3854.firebasestorage.app",
+  messagingSenderId: "914399001572",
+  appId: "1:914399001572:web:c9892a6af0095621f125f1",
 };
 const COLLECTION = "lingoNotebook";
 const V = "10.12.2";

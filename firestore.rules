@@ -1,10 +1,6 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // dar app: each user may only read and write their own progress document
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
     // Lingo Notebook: each user may only read and write their own notebooks
     match /lingoNotebook/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
