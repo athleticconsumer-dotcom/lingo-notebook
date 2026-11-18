@@ -89,8 +89,10 @@ let S;
 try { S = JSON.parse(localStorage.getItem(KEY)) || blankState(); } catch { S = blankState(); }
 S.notebooks ||= []; S.data ||= {}; S.uiLang ||= guessUi();
 let saveTimer;
-function save(flash) {
+function save(flash, fromCloud) {
+  if (!fromCloud) S.updated = Date.now();
   try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { console.warn(e); }
+  if (!fromCloud && window.LN && LN.onSave) LN.onSave(S);
   if (flash) { const el = document.querySelector(".saved"); if (el) { el.classList.add("on"); clearTimeout(saveTimer); saveTimer = setTimeout(() => el.classList.remove("on"), 1200); } }
 }
 const D = id => (S.data[id] ||= { answers: {}, custom: {}, notes: {}, mastered: {} });
@@ -391,6 +393,26 @@ $("#importFile").onchange = async e => {
     save(); alert(L.importOk); location.hash = "#/"; route();
   } catch { alert(L.importBad); }
   e.target.value = "";
+};
+
+// ---------- Bridge for cloud sync (firebase-sync.js) ----------
+window.LN = {
+  onSave: null,
+  get: () => S,
+  lang: () => S.uiLang,
+  // Merge a state from the cloud with this device. Notebooks that exist on only one side are kept;
+  // for notebooks on both sides, the side that was changed more recently wins.
+  merge(remote) {
+    if (!remote || !Array.isArray(remote.notebooks)) return S;
+    const newer = (remote.updated || 0) > (S.updated || 0) ? remote : S;
+    const older = newer === remote ? S : remote;
+    const out = { ...older, ...newer, notebooks: [...newer.notebooks], data: { ...newer.data } };
+    older.notebooks.forEach(nb => { if (!out.notebooks.some(n => n.id === nb.id)) { out.notebooks.push(nb); out.data[nb.id] = older.data[nb.id] || {}; } });
+    out.updated = Math.max(remote.updated || 0, S.updated || 0);
+    S = out; S.data ||= {}; setUi(S.uiLang); save(false, true); route();
+    return S;
+  },
+  clear() { S = blankState(); save(false, true); location.hash = "#/"; route(); },
 };
 
 route();
