@@ -1,6 +1,6 @@
 // Offline support: the app files are cached, so the notebook opens without internet.
 // Files are loaded fresh from the network when online (so updates arrive right away) and from the cache when offline.
-const CACHE = "lingo-notebook-v3";
+const CACHE = "lingo-notebook-v4";
 const FILES = ["./", "index.html", "style.css", "app.js", "firebase-sync.js", "words.js", "words-2.js", "words-3.js",
   "words-4.js", "words-5.js", "words-6.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 
@@ -14,7 +14,8 @@ self.addEventListener("fetch", e => {
   // Only handle our own files; Firebase and Google sign-in go straight to the network.
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
   e.respondWith(
-    fetch(e.request).then(res => {
+    // "no-cache": always ask GitHub for the newest version (skips the browser's 10-minute cache), cache is only the offline fallback.
+    fetch(e.request, { cache: "no-cache" }).then(res => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
       return res;
     }).catch(() => caches.match(e.request, { ignoreSearch: true }).then(r => r || caches.match("index.html")))
