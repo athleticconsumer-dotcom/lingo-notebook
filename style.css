@@ -187,3 +187,22 @@ select.field{width:auto;padding:7px 10px}
 .join{max-width:460px;margin:40px auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
 .join img{width:72px;height:72px;border-radius:18px;margin-bottom:12px}
 @media (max-width:820px){.members-box{align-items:flex-start}}
+
+/* Growing text fields: the whole text is always visible */
+textarea.blank,.own textarea{resize:none;overflow:hidden;display:block;white-space:pre-wrap;overflow-wrap:anywhere;min-height:36px}
+.own textarea.p-in{font:inherit;font-size:.93rem;border:none;border-bottom:1.5px solid var(--ink-soft);background:rgba(255,253,248,.85);padding:6px 4px;min-height:32px}
+.w{align-items:start}
+.w .p{padding-top:10px}
+.notes{overflow:hidden;resize:none;min-height:240px}
+@media (max-width:560px){
+  .w{grid-template-columns:1fr;gap:0;padding:8px 0 2px}
+  .w .p{padding:0}
+  .own{grid-template-columns:1fr 28px}
+  .own textarea.p-in{grid-column:1}
+  .own textarea.blank{grid-column:1}
+  .own .x{grid-column:2;grid-row:1 / span 2;align-self:center}
+}
+.btn{white-space:nowrap}
+@media (max-width:440px){ #brandName{font-size:1.05rem} .bar{gap:8px} .bar-right{gap:6px} }
+.brand{white-space:nowrap}
+@media (max-width:400px){ #brandName{display:none} }

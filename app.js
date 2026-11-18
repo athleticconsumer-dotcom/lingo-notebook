@@ -111,6 +111,9 @@ function badge(nb, tid, i) {
   const m = (nb.memberInfo || {})[a] || {};
   return ` <span class="by" style="background:${colorFor(a)}" title="${esc(m.name || "")}">${esc((m.name || "?").trim()[0] || "?")}</span>`;
 }
+// Text fields grow with their content, so everything written is visible without scrolling.
+const grow = el => { if (!el) return; el.style.height = "auto"; el.style.height = (el.scrollHeight + el.offsetHeight - el.clientHeight + 2) + "px"; };
+window.addEventListener("resize", () => document.querySelectorAll(".wl .blank, .own textarea, #notes").forEach(grow));
 let refreshTopic = null; // set while a topic page is open, so live changes from friends can be shown without losing focus
 const nbById = id => S.notebooks.find(n => n.id === id);
 
@@ -364,7 +367,7 @@ function viewTopic(nb, tid) {
           const v = ans()[i] || "";
           const w = word(row, nb.known).replace(/\(([^)]+)\)/g, "<em>($1)</em>");
           return `<li class="w ${v.trim() ? "filled" : ""}" data-i="${i}"><div class="p">${w}${badge(nb, t.id, i)}</div>
-            <input class="blank" dir="auto" data-i="${i}" value="${esc(v)}" autocomplete="off" spellcheck="false" aria-label="${esc(word(row, nb.known))}"></li>`;
+            <textarea class="blank" rows="1" dir="auto" data-i="${i}" autocomplete="off" spellcheck="false" aria-label="${esc(word(row, nb.known))}">${esc(v)}</textarea></li>`;
         }).join("")}</ul>
       </section>
       <section class="page grid-page">
@@ -387,7 +390,9 @@ function viewTopic(nb, tid) {
   // Blanks: save on typing, Enter jumps to the next empty blank.
   const inputs = [...app.querySelectorAll(".wl .blank")];
   inputs.forEach((inp, k) => {
+    grow(inp);
     inp.addEventListener("input", () => {
+      grow(inp);
       const i = inp.dataset.i;
       const filled = !!inp.value.trim();
       if (filled) ans()[i] = inp.value; else delete ans()[i];
@@ -405,23 +410,25 @@ function viewTopic(nb, tid) {
   const firstEmpty = inputs.find(i => !i.value.trim());
   if (firstEmpty && matchMedia("(min-width: 821px)").matches) firstEmpty.focus({ preventScroll: true });
 
-  $("#onlyBlanks").onchange = e => { S.onlyBlanks = e.target.checked; save(); $("#spread").classList.toggle("hide-filled", S.onlyBlanks); app.querySelectorAll(".wl .w").forEach(li => li.classList.toggle("filled", !!li.querySelector("input").value.trim())); };
+  $("#onlyBlanks").onchange = e => { S.onlyBlanks = e.target.checked; save(); $("#spread").classList.toggle("hide-filled", S.onlyBlanks); inputs.forEach(grow); app.querySelectorAll(".wl .w").forEach(li => li.classList.toggle("filled", !!li.querySelector(".blank").value.trim())); };
 
   // Own words on the free page.
   const drawOwn = () => {
     $("#ownList").innerHTML = own().map((c, i) => `<div class="own" data-o="${i}">
-      <input class="p-in" dir="auto" placeholder="${L.promptPh}" value="${esc(c.p)}" data-f="p">
-      <input class="blank" dir="auto" placeholder="${L.answerPh}" value="${esc(c.a)}" data-f="a">
+      <textarea class="p-in" rows="1" dir="auto" placeholder="${L.promptPh}" data-f="p">${esc(c.p)}</textarea>
+      <textarea class="blank" rows="1" dir="auto" placeholder="${L.answerPh}" data-f="a">${esc(c.a)}</textarea>
       <button class="x" title="✕">✕</button></div>`).join("");
     $("#ownList").querySelectorAll(".own").forEach(row => {
       const i = +row.dataset.o;
-      row.querySelectorAll("input").forEach(inp => inp.oninput = () => { own()[i][inp.dataset.f] = inp.value; save(true); cloudEdit(nb, ["custom", t.id], own()); });
+      row.querySelectorAll("textarea").forEach(inp => { grow(inp); inp.oninput = () => { grow(inp); own()[i][inp.dataset.f] = inp.value; save(true); cloudEdit(nb, ["custom", t.id], own()); };
+        inp.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); inp.blur(); } }; });
       row.querySelector(".x").onclick = () => { own().splice(i, 1); save(true); cloudEdit(nb, ["custom", t.id], own()); drawOwn(); };
     });
   };
   drawOwn();
-  $("#addOwn").onclick = () => { own().push({ p: "", a: "" }); save(); cloudEdit(nb, ["custom", t.id], own()); drawOwn(); $("#ownList .own:last-child input").focus(); };
-  $("#notes").oninput = e => { d().notes[t.id] = e.target.value; save(true); cloudEdit(nb, ["notes", t.id], e.target.value); };
+  $("#addOwn").onclick = () => { own().push({ p: "", a: "" }); save(); cloudEdit(nb, ["custom", t.id], own()); drawOwn(); $("#ownList .own:last-child textarea").focus(); };
+  grow($("#notes"));
+  $("#notes").oninput = e => { grow(e.target); d().notes[t.id] = e.target.value; save(true); cloudEdit(nb, ["notes", t.id], e.target.value); };
 
   // Live updates from friends: refresh everything except the field you are typing in.
   refreshTopic = id => {
@@ -429,12 +436,12 @@ function viewTopic(nb, tid) {
     const focus = document.activeElement;
     inputs.forEach(inp => {
       const i = inp.dataset.i, v = ans()[i] || "", li = inp.closest(".w");
-      if (inp !== focus && inp.value !== v) { inp.value = v; li.classList.toggle("filled", !!v.trim()); }
+      if (inp !== focus && inp.value !== v) { inp.value = v; li.classList.toggle("filled", !!v.trim()); grow(inp); }
       const p = li.querySelector(".p"), old = p.querySelector(".by"), b = badge(nb, t.id, i);
       if (old) old.remove();
       if (b) p.insertAdjacentHTML("beforeend", b);
     });
-    const n = $("#notes"); if (n && n !== focus && n.value !== (d().notes[t.id] || "")) n.value = d().notes[t.id] || "";
+    const n = $("#notes"); if (n && n !== focus && n.value !== (d().notes[t.id] || "")) { n.value = d().notes[t.id] || ""; grow(n); }
     if (!$("#ownList").contains(focus)) drawOwn();
     count();
   };
