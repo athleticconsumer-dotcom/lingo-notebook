@@ -1,4 +1,4 @@
-# Blank Notebook
+# Lingo Notebook
 
 A fill-in-the-blanks vocabulary notebook for any language, inspired by the Ultimate Language Notebook.
 
@@ -14,6 +14,8 @@ A fill-in-the-blanks vocabulary notebook for any language, inspired by the Ultim
 - Flashcard review built from your own answers, with reverse mode
 - Print a topic as a filled page or as an empty worksheet
 - Backup and restore as a JSON file
+- Installable as an app (PWA) with its own icon, works offline
+- Google sign-in with Firestore sync (Firebase project lingo-notebook)
 
 All data is stored in the browser (localStorage). No build step: open `index.html` or publish with GitHub Pages.
 

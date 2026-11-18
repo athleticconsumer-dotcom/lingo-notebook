@@ -1,4 +1,4 @@
-/* Blank Notebook – a fill-in-the-blanks vocabulary notebook.
+/* Lingo Notebook – a fill-in-the-blanks vocabulary notebook.
    Words are shown in the language you KNOW; you write them in the language you LEARN.
    Everything is saved in this browser (localStorage). Use Backup to move it elsewhere. */
 (() => {
@@ -46,7 +46,7 @@ const TARGETS = [
 
 // ---------- Interface text (follows the language you know) ----------
 const UI = {
-  en: { my:"My notebooks", sub:"Pick a language you know and one you want to learn. Every word appears in your language with a blank next to it. Fill the blanks and build your own dictionary, topic by topic.",
+  en: { install:"Install app", installTip:"Install Lingo Notebook on your phone: it opens like an app, with its own icon, and works offline.", installIos:"On iPhone: tap Share, then “Add to Home Screen”.", my:"My notebooks", sub:"Pick a language you know and one you want to learn. Every word appears in your language with a blank next to it. Fill the blanks and build your own dictionary, topic by topic.",
     newNb:"New notebook", known:"I know…", knownHint:"The words will be printed in this language.", learn:"I want to learn…", learnHint:"You write this language in the blanks.",
     other:"Other language…", create:"Create notebook", words:"words", filled:"filled", topics:"topics", own:"own words", contents:"Contents",
     review:"Review", back:"Back", onlyBlanks:"Show only empty blanks", ownWords:"My own words", addWord:"+ Add a word", notes:"Notes & dialogues",
@@ -55,7 +55,7 @@ const UI = {
     tap:"Tap to show your answer", knew:"I knew it ✓", again:"Again ↺", finished:"Session finished", restart:"Start again", noFilled:"Fill some blanks first, then come back to review them.",
     all:"All topics", reverse:"Reverse direction", importOk:"Backup restored.", importBad:"This file is not a valid backup.", same:"Choose a different language than the one you know.",
     langName:"Language name", mastered:"mastered", leftPage:"Fill in the blanks", rightPage:"Free page", cards:"cards" },
-  de: { my:"Meine Notizbücher", sub:"Wähle eine Sprache, die du kannst, und eine, die du lernen willst. Jedes Wort steht in deiner Sprache mit einer Lücke daneben. Fülle die Lücken und bau dir Thema für Thema dein eigenes Wörterbuch.",
+  de: { install:"App installieren", installTip:"Installiere Lingo Notebook auf deinem Handy: Es öffnet sich wie eine App, mit eigenem Icon, und funktioniert auch offline.", installIos:"Auf dem iPhone: Teilen antippen, dann „Zum Home-Bildschirm“.", my:"Meine Notizbücher", sub:"Wähle eine Sprache, die du kannst, und eine, die du lernen willst. Jedes Wort steht in deiner Sprache mit einer Lücke daneben. Fülle die Lücken und bau dir Thema für Thema dein eigenes Wörterbuch.",
     newNb:"Neues Notizbuch", known:"Ich kann…", knownHint:"In dieser Sprache werden die Wörter angezeigt.", learn:"Ich lerne…", learnHint:"Diese Sprache schreibst du in die Lücken.",
     other:"Andere Sprache…", create:"Notizbuch anlegen", words:"Wörter", filled:"ausgefüllt", topics:"Themen", own:"eigene Wörter", contents:"Inhalt",
     review:"Wiederholen", back:"Zurück", onlyBlanks:"Nur leere Lücken zeigen", ownWords:"Meine eigenen Wörter", addWord:"+ Wort hinzufügen", notes:"Notizen & Dialoge",
@@ -64,7 +64,7 @@ const UI = {
     tap:"Tippen, um deine Antwort zu sehen", knew:"Gewusst ✓", again:"Nochmal ↺", finished:"Runde beendet", restart:"Neu starten", noFilled:"Fülle zuerst ein paar Lücken aus, dann kannst du sie hier wiederholen.",
     all:"Alle Themen", reverse:"Richtung umdrehen", importOk:"Backup wiederhergestellt.", importBad:"Diese Datei ist kein gültiges Backup.", same:"Wähle eine andere Sprache als die, die du kannst.",
     langName:"Name der Sprache", mastered:"gewusst", leftPage:"Lücken ausfüllen", rightPage:"Freie Seite", cards:"Karten" },
-  fr: { my:"Mes cahiers", sub:"Choisis une langue que tu connais et une que tu veux apprendre. Chaque mot apparaît dans ta langue avec un blanc à côté. Remplis les blancs et construis ton propre dictionnaire, thème par thème.",
+  fr: { install:"Installer l’app", installTip:"Installe Lingo Notebook sur ton téléphone : il s’ouvre comme une app, avec sa propre icône, et marche hors ligne.", installIos:"Sur iPhone : touche Partager, puis « Sur l’écran d’accueil ».", my:"Mes cahiers", sub:"Choisis une langue que tu connais et une que tu veux apprendre. Chaque mot apparaît dans ta langue avec un blanc à côté. Remplis les blancs et construis ton propre dictionnaire, thème par thème.",
     newNb:"Nouveau cahier", known:"Je parle…", knownHint:"Les mots seront affichés dans cette langue.", learn:"J'apprends…", learnHint:"Tu écris cette langue dans les blancs.",
     other:"Autre langue…", create:"Créer le cahier", words:"mots", filled:"remplis", topics:"thèmes", own:"mots perso", contents:"Sommaire",
     review:"Réviser", back:"Retour", onlyBlanks:"Afficher seulement les blancs vides", ownWords:"Mes propres mots", addWord:"+ Ajouter un mot", notes:"Notes & dialogues",
@@ -73,7 +73,7 @@ const UI = {
     tap:"Touche pour voir ta réponse", knew:"Je savais ✓", again:"Encore ↺", finished:"Série terminée", restart:"Recommencer", noFilled:"Remplis d'abord quelques blancs, puis reviens les réviser.",
     all:"Tous les thèmes", reverse:"Inverser le sens", importOk:"Sauvegarde restaurée.", importBad:"Ce fichier n'est pas une sauvegarde valide.", same:"Choisis une autre langue que celle que tu parles.",
     langName:"Nom de la langue", mastered:"maîtrisés", leftPage:"Remplis les blancs", rightPage:"Page libre", cards:"cartes" },
-  ru: { my:"Мои тетради", sub:"Выбери язык, который знаешь, и язык, который хочешь выучить. Каждое слово написано на твоём языке, а рядом пустое место. Заполняй пропуски и составляй свой словарь, тема за темой.",
+  ru: { install:"Установить", installTip:"Установи Lingo Notebook на телефон: он открывается как приложение, со своей иконкой, и работает офлайн.", installIos:"На iPhone: нажми «Поделиться», затем «На экран „Домой“».", my:"Мои тетради", sub:"Выбери язык, который знаешь, и язык, который хочешь выучить. Каждое слово написано на твоём языке, а рядом пустое место. Заполняй пропуски и составляй свой словарь, тема за темой.",
     newNb:"Новая тетрадь", known:"Я знаю…", knownHint:"Слова будут показаны на этом языке.", learn:"Я учу…", learnHint:"На этом языке ты пишешь в пропусках.",
     other:"Другой язык…", create:"Создать тетрадь", words:"слов", filled:"заполнено", topics:"тем", own:"своих слов", contents:"Содержание",
     review:"Повторить", back:"Назад", onlyBlanks:"Только пустые строки", ownWords:"Мои слова", addWord:"+ Добавить слово", notes:"Заметки и диалоги",
@@ -160,10 +160,21 @@ function viewHome() {
       <div class="lbl"><small>${esc(known.native)} → </small><strong dir="auto">${esc(nb.targetName)}</strong></div>
       <div class="meta">${s.filled} / ${s.total} ${UI[nb.known].words}${s.own ? ` · +${s.own}` : ""}<div class="mini-bar"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div></a>`;
   }).join("");
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const tip = (installEvent || ios) ? `<div class="install-tip"><img src="icons/icon-192.png" alt=""><div style="flex:1;min-width:200px">${L.installTip}${!installEvent && ios ? `<br><b>${L.installIos}</b>` : ""}</div>
+    ${installEvent ? `<button class="btn primary small" id="installBtn">⬇ ${L.install}</button>` : ""}</div>` : "";
   app.innerHTML = `
     <div class="hero"><div><h1>${L.my}</h1><p class="muted">${L.sub}</p></div></div>
-    <div class="shelf">${covers}<a class="cover add" href="#/new"><div><span>+</span><div>${L.newNb}</div></div></a></div>`;
+    <div class="shelf">${covers}<a class="cover add" href="#/new"><div><span>+</span><div>${L.newNb}</div></div></a></div>${tip}`;
+  const ib = $("#installBtn");
+  if (ib) ib.onclick = async () => { installEvent.prompt(); await installEvent.userChoice; installEvent = null; viewHome(); };
 }
+
+// "Install app" button (Android/Chrome/Edge): the browser offers installation once the app qualifies.
+let installEvent = null;
+const onHome = () => !location.hash || location.hash === "#/" || location.hash === "#";
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvent = e; if (onHome()) viewHome(); });
+window.addEventListener("appinstalled", () => { installEvent = null; if (onHome()) viewHome(); });
 
 // ---------- Setup ----------
 function viewSetup() {
@@ -384,7 +395,7 @@ function viewReview(nb, tid) {
 function downloadBackup() {
   const blob = new Blob([JSON.stringify({ app: "blank-notebook", version: 1, saved: new Date().toISOString(), ...S }, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob); a.download = `blank-notebook-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.href = URL.createObjectURL(blob); a.download = `lingo-notebook-backup-${new Date().toISOString().slice(0, 10)}.json`;
   a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 $("#importFile").onchange = async e => {

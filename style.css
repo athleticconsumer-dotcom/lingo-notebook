@@ -14,7 +14,7 @@ a{color:inherit}
 button{font:inherit;cursor:pointer}
 .bar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);background:rgba(250,246,238,.92);position:sticky;top:0;z-index:10;backdrop-filter:blur(6px)}
 .brand{font-family:var(--serif);font-weight:700;font-size:1.25rem;text-decoration:none;display:flex;align-items:center;gap:8px}
-.brand-mark{display:inline-grid;place-items:center;width:28px;height:28px;border:2px solid var(--ink);border-radius:6px;font-size:.8rem;line-height:1}
+.brand-mark{width:32px;height:32px;border-radius:8px;display:block}
 .bar-right{display:flex;gap:8px;align-items:center}
 main{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
 h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0 0 .4em;letter-spacing:-.01em}
@@ -166,3 +166,7 @@ select.field{width:auto;padding:7px 10px}
   .print-blank .blank{color:transparent!important}
   .blank{border-bottom:1px solid #999}
 }
+
+.install-tip{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:.9rem;color:var(--ink-soft);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.install-tip img{width:40px;height:40px;border-radius:10px}
+@media (display-mode: standalone){.install-tip{display:none}}
