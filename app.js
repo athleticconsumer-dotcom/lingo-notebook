@@ -4,6 +4,10 @@
 (() => {
 "use strict";
 
+// Word files store each topic as text lines "English|Deutsch|Français|Русский"; turn them into arrays and put them in reading order.
+TOPICS.forEach(t => { if (typeof t.words === "string") t.words = t.words.trim().split("\n").map(l => l.split("|").map(x => x.trim())).filter(r => r.length === 4); });
+if (window.TOPIC_ORDER) TOPICS.sort((a, b) => { const i = x => { const k = TOPIC_ORDER.indexOf(x.id); return k < 0 ? 999 : k; }; return i(a) - i(b); });
+
 // ---------- Languages ----------
 // Languages the words are printed in (the word list has these columns).
 const KNOWN = [

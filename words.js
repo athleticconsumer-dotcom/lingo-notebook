@@ -312,7 +312,7 @@ rent|Miete|loyer|аренда`},
 city|Stadt|ville|город
 village|Dorf|village|деревня
 street|Straße|rue|улица
-square|Platz|place|площадь
+square (in town)|Platz|place|площадь
 shop|Laden|magasin|магазин
 market|Markt|marché|рынок
 supermarket|Supermarkt|supermarché|супермаркет
@@ -672,5 +672,3 @@ I'm coming|ich komme|j'arrive|иду
 I'm late|ich bin spät dran|je suis en retard|я опаздываю
 it's important|es ist wichtig|c'est important|это важно`}
 ];
-// Parse the compact strings into arrays once.
-window.TOPICS.forEach(t => { t.words = t.words.trim().split("\n").map(l => l.split("|").map(s => s.trim())); });
