@@ -72,6 +72,41 @@ function val(pl, key) {
     case "food": case "drink": case "item": return o(key, p[key])?.[1] || "";
     case "foodDe": case "drinkDe": case "itemDe": return o(key.slice(0, -2), p[key.slice(0, -2)])?.[2] || "";
   }
+  // Russian forms (Kumyk section)
+  const RU = window.DIALOG_RU || {};
+  const ruNum = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many; };
+  const joinRu = a => a.length < 2 ? (a[0] || "") : a.slice(0, -1).join(", ") + " и " + a[a.length - 1];
+  const hourRu = id => { if (!id) return ""; const n = +id; return n === 1 ? "час" : `${n} ${ruNum(n, "час", "часа", "часов")}`; };
+  switch (key) {
+    case "countryRu": return RU.country?.[p.country]?.[0] || "";
+    case "natRu": return RU.country?.[p.country]?.[1 + gi] || "";
+    case "jobRu": return RU.job?.[p.job]?.[gi] || "";
+    case "homeRu": return RU.home?.[p.home] || "";
+    case "langsRu": return joinRu((p.langs || []).map(id => RU.lang?.[id]).filter(Boolean));
+    case "moodRu": return RU.mood?.[p.mood]?.[gi] || "";
+    case "ageRu": return isNum(p.age) ? `${p.age} ${ruNum(+p.age, "год", "года", "лет")}` : "";
+    case "hoursRu": return RU.hours?.[p.hours] || "";
+    case "marriedRu": return p.married === "yes" ? (f ? "Да, я замужем." : "Да, я женат.") : p.married === "no" ? (f ? "Нет, я не замужем." : "Нет, я не женат.") : "";
+    case "kidsRu": {
+      if (!isNum(p.kids)) return ""; const k = +p.kids;
+      const coll = { 2: "двое", 3: "трое", 4: "четверо", 5: "пятеро", 6: "шестеро", 7: "семеро" };
+      return k === 0 ? "У меня нет детей." : k === 1 ? "У меня один ребёнок." : coll[k] ? `У меня ${coll[k]} детей.` : `У меня ${k} ${ruNum(k, "ребёнок", "ребёнка", "детей")}.`;
+    }
+    case "siblingsRu": {
+      if (!isNum(p.brothers) || !isNum(p.sisters)) return "";
+      const b = +p.brothers, s = +p.sisters, parts = [];
+      const W = { 2: ["два", "две"], 3: ["три", "три"], 4: ["четыре", "четыре"] };
+      if (b) parts.push(b === 1 ? "один брат" : W[b] ? `${W[b][0]} брата` : `${b} ${ruNum(b, "брат", "брата", "братьев")}`);
+      if (s) parts.push(s === 1 ? "одна сестра" : W[s] ? `${W[s][1]} сестры` : `${s} ${ruNum(s, "сестра", "сестры", "сестёр")}`);
+      return parts.length ? `У меня ${parts.join(" и ")}.` : "У меня нет ни братьев, ни сестёр.";
+    }
+    case "workStartRu": return hourRu(p.workStart);
+    case "wakeRu": return hourRu(p.wake);
+    case "sleepRu": return hourRu(p.sleep);
+    case "hobbiesRu": return joinRu((p.hobbies || []).map(id => RU.hobby?.[id]?.[1]).filter(Boolean));
+    case "hobby1Ru": return RU.hobby?.[(p.hobbies || [])[0]]?.[0] || "";
+    case "foodRu": case "drinkRu": case "itemRu": return RU[key.slice(0, -2)]?.[p[key.slice(0, -2)]] || "";
+  }
   return "";
 }
 // Fill a line template for speaker S talking to listener L.
@@ -194,18 +229,35 @@ function wireForm(root, pair, onChange) {
   }));
 }
 
+// ---------- Language: Arabic or Kumyk ----------
+const view = () => (C.S().dialogView ||= { de: true, hideOther: false, hideMine: false });
+const lang = () => view().lang === "ku" ? "ku" : "ar";
+const KU = () => window.KUMYK_LEVELS || [];
+const doneKey = (l, n) => l === "ku" ? "k" + n : String(n);
+const doneCount = (pair, l) => (l === "ku" ? KU() : LV).filter(x => (pair.done || {})[doneKey(l, x.n)]).length;
+function langTabs() {
+  return `<div class="lang-tabs"><button data-l="ar" class="${lang() === "ar" ? "on" : ""}">🇸🇦 Arabisch</button><button data-l="ku" class="${lang() === "ku" ? "on" : ""}">🏔️ Kumykisch</button></div>`;
+}
+function wireTabs(rerender) {
+  C.app.querySelectorAll(".lang-tabs button").forEach(b => b.onclick = () => { view().lang = b.dataset.l; C.save(); rerender(); });
+}
+const growTA = el => { el.style.height = "auto"; el.style.height = (el.scrollHeight + el.offsetHeight - el.clientHeight + 2) + "px"; };
+
 // ---------- Views ----------
 function viewHome() {
   C.setBar(`<a class="btn ghost small" href="#/">← Notizbücher</a>`);
   const d = D(), m = me();
+  const l = lang(), total = l === "ku" ? KU().length : LV.length;
   const cards = d.pairs.map(pair => {
-    const done = Object.keys(pair.done || {}).length;
+    const done = doneCount(pair, l);
     return `<a class="pair-card" href="#/dialog/${pair.id}"><div class="pc-top"><span class="pc-ic">${pair.shared ? "👥" : "📱"}</span>
       <div><b>${C.esc(partnerName(pair))}</b><small class="muted">${pair.shared ? "jeder auf seinem Handy" : "zusammen auf diesem Handy"}</small></div></div>
-      <div class="progress"><i style="width:${done / LV.length * 100}%"></i></div><small class="muted">${done} / ${LV.length} Level</small></a>`;
+      <div class="progress"><i style="width:${done / total * 100}%"></i></div><small class="muted">${done} / ${total} Level ${l === "ku" ? "Kumykisch" : "Arabisch"}</small></a>`;
   }).join("");
   C.app.innerHTML = `<div class="dlg-home">
-    <div class="hero"><div><h1>💬 Dialoge üben</h1><p class="muted">Arabisch (Fusha) A0 bis A1 in 12 Leveln. Lernt zu zweit: Jeder trägt seine Infos ein (Name, Herkunft, Arbeit, Hobbys …) und der Dialog wird für euch beide angepasst, auch männlich und weiblich. Jeder sieht seine Seite, dann sprecht ihr den Dialog zusammen.</p></div></div>
+    <div class="hero"><div><h1>💬 Dialoge üben</h1>${langTabs()}<p class="muted">${l === "ku"
+      ? "Kumykisch in 12 Leveln als Lücken-Dialoge: Jeder Satz steht auf Deutsch und Russisch, angepasst an euch beide. Das Kumykische schreibt ihr selbst hinein, zum Beispiel zusammen mit einem Muttersprachler oder aus euren Lernmaterialien. Dein Partner sieht alles live."
+      : "Arabisch (Fusha) A0 bis A1 in 12 Leveln. Lernt zu zweit: Jeder trägt seine Infos ein (Name, Herkunft, Arbeit, Hobbys …) und der Dialog wird für euch beide angepasst, auch männlich und weiblich. Jeder sieht seine Seite, dann sprecht ihr den Dialog zusammen."}</p></div></div>
     <div class="step"><h3>👤 Über mich</h3><div id="meForm">${fieldHtml("g", m, "me")}${fieldHtml("name", m, "me")}</div>
       <a class="btn small" href="#/dialog/me" style="margin-top:8px">✎ Ganzes Profil bearbeiten</a></div>
     <h2>Meine Übungspartner</h2>
@@ -214,6 +266,7 @@ function viewHome() {
       <button class="pair-card add" id="addLocal"><span class="pc-ic">📱</span><b>Zusammen auf einem Handy</b><small class="muted">Ihr sitzt zusammen und übt auf diesem Gerät</small></button>
     </div></div>`;
   wireForm(C.$("#meForm"), null);
+  wireTabs(viewHome);
   C.$("#addLocal").onclick = () => {
     if (!me().g) return alert("Wähle zuerst oben, ob du männlich oder weiblich bist.");
     const pair = { id: "d" + Math.random().toString(36).slice(2, 9), shared: false, partner: { g: "", p: {} }, done: {}, roles: {}, created: Date.now() };
@@ -273,9 +326,14 @@ function viewPair(id) {
     ${waiting ? `<div class="wait-box">⏳ Dein Partner ist noch nicht beigetreten. <button class="btn small primary" id="invBtn">👥 Einladungslink senden</button></div>` : ""}
     ${!pair.shared ? `<div class="step" id="partnerForm"><h3>📱 Dein Partner auf diesem Handy</h3>${fieldHtml("g", pair.partner, "partner")}${fieldHtml("name", pair.partner, "partner")}</div>` : ""}
   </div>
-  <h2>12 Level · Arabisch A0 → A1</h2>
+  ${langTabs()}
+  ${lang() === "ku" ? `<h2>12 Level · Kumykisch (Lücken-Dialoge)</h2>
+  <div class="lvl-grid">${KU().map(l => { const k = "k" + l.n, filled = Object.values((pair.kumyk || {})[k] || {}).filter(v => v && v.trim()).length; return `<a class="lvl ${pair.done?.[k] ? "done" : ""}" href="#/dialog/${pair.id}/${k}">
+    <span class="lvl-n">${l.n}</span><span class="lvl-ic">${l.icon}</span><b class="ku-t">${C.esc(l.de)}</b><small>${C.esc(l.ru)}</small><span class="cefr">${filled} / ${l.lines.length} Zeilen</span>${pair.done?.[k] ? `<span class="tick">✓</span>` : ""}</a>`; }).join("")}</div>`
+  : `<h2>12 Level · Arabisch A0 → A1</h2>
   <div class="lvl-grid">${LV.map(l => `<a class="lvl ${pair.done?.[l.n] ? "done" : ""}" href="#/dialog/${pair.id}/${l.n}">
-    <span class="lvl-n">${l.n}</span><span class="lvl-ic">${l.icon}</span><b class="ar-t" dir="rtl">${l.ar}</b><small>${l.de}</small><span class="cefr">${l.cefr}</span>${pair.done?.[l.n] ? `<span class="tick">✓</span>` : ""}</a>`).join("")}</div>`;
+    <span class="lvl-n">${l.n}</span><span class="lvl-ic">${l.icon}</span><b class="ar-t" dir="rtl">${l.ar}</b><small>${l.de}</small><span class="cefr">${l.cefr}</span>${pair.done?.[l.n] ? `<span class="tick">✓</span>` : ""}</a>`).join("")}</div>`}`;
+  wireTabs(() => viewPair(id));
   const ib = C.$("#invBtn"); if (ib) ib.onclick = () => invite(pair);
   const pf = C.$("#partnerForm"); if (pf) wireForm(pf, pair, g => { if (g === true || g === "commit") viewPair(id); });
 }
@@ -363,10 +421,131 @@ function viewLevel(id, n) {
   C.$("#doneBtn").onclick = () => { setDone(pair, lvl.n, !pair.done?.[lvl.n]); viewLevel(id, n); };
 }
 
+
+// ---------- Kumyk level: fill-in dialogue ----------
+function viewKumyk(id, n) {
+  const pair = pairById(id); if (!pair) return (location.hash = "#/dialog");
+  const lvl = KU().find(l => l.n === n); if (!lvl) return (location.hash = `#/dialog/${id}`);
+  const key = "k" + n;
+  C.setBar(`<a class="btn ghost small" href="#/dialog/${id}">← Level</a>`);
+  const st = view(); if (st.ru === undefined) st.ru = true;
+  const lines = () => ((pair.kumyk ||= {})[key] ||= {});
+  const words = () => ((pair.kvocab ||= {})[key] ||= []);
+  const prev = KU().find(l => l.n === n - 1), next = KU().find(l => l.n === n + 1);
+  C.app.innerHTML = `<div class="lvl-page">
+    <div class="lvl-title"><span class="lvl-n big">${n}</span><div><h1>${C.esc(lvl.de)}</h1><div class="muted">${lvl.icon} ${C.esc(lvl.ru)} · Kumykisch</div></div></div>
+    <div class="ku-note">✍️ Schreibt unter jeden Satz, wie man ihn auf <b>Kumykisch</b> sagt, zum Beispiel zusammen mit einem Muttersprachler oder aus euren Lernmaterialien. ${pair.shared ? "Was ihr schreibt, sieht dein Partner sofort." : ""}</div>
+    <div id="formArea"></div>
+    <div class="dlg-tools">
+      <button class="btn small" id="swap">⇄ Rollen tauschen</button>
+      <label class="toggle"><input type="checkbox" id="tRu" ${st.ru ? "checked" : ""}> Russisch</label>
+      <label class="toggle"><input type="checkbox" id="tOther" ${st.hideOther ? "checked" : ""}> Partner verdecken</label>
+      <label class="toggle"><input type="checkbox" id="tMine" ${st.hideMine ? "checked" : ""}> Meine Zeilen verdecken</label>
+    </div>
+    <div id="roles" class="muted" style="font-size:.85rem;margin:6px 2px 10px"></div>
+    <div class="chat" id="chat"></div>
+    <h2 style="margin-top:28px">📚 Meine Kumyk-Wörter</h2>
+    <p class="muted" style="margin-top:-4px">Tragt hier die neuen Wörter aus diesem Dialog ein.</p>
+    <div id="kwords"></div>
+    <button class="btn small" id="addWord" style="margin-top:8px">+ Wort hinzufügen</button>
+    <div class="row" style="justify-content:space-between;margin-top:22px">
+      ${prev ? `<a class="btn" href="#/dialog/${id}/k${prev.n}">← ${prev.n}. ${C.esc(prev.de)}</a>` : "<span></span>"}
+      <button class="btn ${pair.done?.[key] ? "" : "primary"}" id="doneBtn">${pair.done?.[key] ? "✓ Geschafft (rückgängig)" : "✓ Level geschafft"}</button>
+      ${next ? `<a class="btn" href="#/dialog/${id}/k${next.n}">${next.n}. ${C.esc(next.de)} →</a>` : "<span></span>"}
+    </div></div>`;
+
+  let keysMe = null, keysPartner = null, formClosed = false;
+  const drawForm = () => {
+    const mine = me(), other = partnerOf(pair);
+    if (!keysMe) { keysMe = missing(mine, lvl); keysPartner = !pair.shared ? missing(other, lvl) : []; }
+    const mm = formClosed ? [] : keysMe, om = formClosed ? [] : keysPartner;
+    const stillMissing = missing(mine, lvl).length + (!pair.shared ? missing(other, lvl).length : 0);
+    const remoteMissing = pair.shared && (!other || missing(other, lvl).length);
+    C.$("#formArea").innerHTML = (mm.length || om.length || remoteMissing) ? `<div class="step setup-box">
+      <h3>✍️ Bevor ihr startet</h3><p class="muted" style="margin-top:0">Tragt eure Infos ein, dann werden die Sätze für euch angepasst.</p>
+      ${mm.length ? `<div class="form-part" data-part="me"><h4>Du (${C.esc(val(mine, "nameDe") || "ich")})</h4>${mm.map(k => fieldHtml(k, mine, "me")).join("")}</div>` : ""}
+      ${om.length ? `<div class="form-part" data-part="partner"><h4>Dein Partner (${C.esc(val(other, "nameDe") || "Partner")})</h4>${om.map(k => fieldHtml(k, other, "partner")).join("")}</div>` : ""}
+      ${mm.length || om.length ? `<button class="btn primary" id="formDone" ${stillMissing ? "disabled" : ""}>✓ Fertig, zum Dialog</button>` : ""}
+      ${remoteMissing ? `<p class="wait-note">⏳ ${other ? C.esc(val(other, "nameDe") || "Dein Partner") + " muss noch seine Infos für dieses Level eintragen." : "Dein Partner ist noch nicht beigetreten."} Die fehlenden Stellen sind mit … markiert.</p>` : ""}
+    </div>` : "";
+    wireForm(C.$("#formArea"), pair, g => {
+      drawDialog();
+      const b = C.$("#formDone"); if (b) b.disabled = missing(me(), lvl).length + (!pair.shared ? missing(partnerOf(pair), lvl).length : 0) > 0;
+      if (g === true) drawForm();
+    });
+    const fd = C.$("#formDone"); if (fd) fd.onclick = () => { formClosed = true; drawForm(); };
+  };
+
+  const revealed = new Set();
+  const drawDialog = () => {
+    const P = people(pair, key);
+    const roleNames = lvl.roles || ["Person A", "Person B"];
+    C.$("#roles").innerHTML = `<b>${C.esc(P.aName)}</b> = ${roleNames[0]} · <b>${C.esc(P.bName)}</b> = ${roleNames[1]}`;
+    C.$("#chat").innerHTML = lvl.lines.map(([sp, de, ru], i) => {
+      const S = sp === "A" ? P.A : P.B, L = sp === "A" ? P.B : P.A;
+      const mine = sp === "A" ? P.mineA : P.mineB;
+      const v = lines()[i] || "";
+      const hidden = v.trim() && !revealed.has(i) && ((mine && st.hideMine) || (!mine && st.hideOther));
+      return `<div class="bub ku ${mine ? "mine" : "other"}" data-i="${i}">
+        <div class="bub-who">${C.esc(sp === "A" ? P.aName : P.bName)}</div>
+        <div class="bub-src">${fill(de, S, L, true)}</div>
+        ${st.ru ? `<div class="bub-de">${fill(ru, S, L, true)}</div>` : ""}
+        ${hidden ? `<div class="ku-hidden" data-i="${i}">${C.esc(v)}</div>`
+          : `<textarea class="ku-in" rows="1" dir="auto" data-i="${i}" placeholder="auf Kumykisch …" spellcheck="false">${C.esc(v)}</textarea>`}
+      </div>`;
+    }).join("");
+    C.$("#chat").querySelectorAll(".ku-hidden").forEach(h => h.onclick = () => { revealed.add(+h.dataset.i); drawDialog(); });
+    C.$("#chat").querySelectorAll(".ku-in").forEach(ta => {
+      growTA(ta);
+      ta.oninput = () => {
+        growTA(ta);
+        const i = ta.dataset.i, v = ta.value;
+        if (v.trim()) lines()[i] = v; else delete lines()[i];
+        C.save();
+        if (pair.shared && cloud()) cloud().edit(pair.id, ["kumyk", key, String(i)], v.trim() ? v : null);
+      };
+      ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); const all = [...C.$("#chat").querySelectorAll(".ku-in")]; const nx = all[all.indexOf(ta) + 1]; nx ? nx.focus() : ta.blur(); } };
+    });
+  };
+
+  const syncWords = () => { C.save(); if (pair.shared && cloud()) cloud().edit(pair.id, ["kvocab", key], words()); };
+  const drawWords = () => {
+    C.$("#kwords").innerHTML = words().map((w, i) => `<div class="kw" data-w="${i}">
+      <textarea class="ku-in" rows="1" dir="auto" data-f="k" placeholder="Kumykisch">${C.esc(w.k || "")}</textarea>
+      <textarea class="ku-in de" rows="1" data-f="de" placeholder="Deutsch">${C.esc(w.de || "")}</textarea>
+      <button class="x" title="Löschen">✕</button></div>`).join("") || `<p class="muted" style="font-size:.88rem">Noch keine Wörter.</p>`;
+    C.$("#kwords").querySelectorAll(".kw").forEach(row => {
+      const i = +row.dataset.w;
+      row.querySelectorAll("textarea").forEach(ta => { growTA(ta); ta.oninput = () => { growTA(ta); words()[i][ta.dataset.f] = ta.value; syncWords(); }; });
+      row.querySelector(".x").onclick = () => { words().splice(i, 1); syncWords(); drawWords(); };
+    });
+  };
+
+  drawForm(); drawDialog(); drawWords();
+  current = { id, n: key, drawForm, drawDialog,
+    // Live update from the partner: refresh everything except the field you are typing in.
+    live() {
+      const focus = document.activeElement;
+      const typingLine = focus && focus.closest && focus.closest("#chat");
+      if (!typingLine) drawDialog();
+      else C.$("#chat").querySelectorAll(".ku-in").forEach(ta => { if (ta !== focus) { const v = lines()[ta.dataset.i] || ""; if (ta.value !== v) { ta.value = v; growTA(ta); } } });
+      if (!(focus && C.$("#kwords").contains(focus))) drawWords();
+      if (!(focus && C.$("#formArea").contains(focus))) drawForm();
+    } };
+
+  C.$("#swap").onclick = () => { setRole(pair, key, !(pair.roles || {})[key]); drawDialog(); };
+  C.$("#tRu").onchange = e => { st.ru = e.target.checked; C.save(); drawDialog(); };
+  C.$("#tOther").onchange = e => { st.hideOther = e.target.checked; revealed.clear(); C.save(); drawDialog(); };
+  C.$("#tMine").onchange = e => { st.hideMine = e.target.checked; revealed.clear(); C.save(); drawDialog(); };
+  C.$("#addWord").onclick = () => { words().push({ k: "", de: "" }); syncWords(); drawWords(); const all = C.$("#kwords").querySelectorAll("textarea"); all[all.length - 2]?.focus(); };
+  C.$("#doneBtn").onclick = () => { setDone(pair, key, !pair.done?.[key]); viewKumyk(id, n); };
+}
+
 // Live update from the partner's phone.
 function refresh(id) {
   const h = location.hash;
   if (!h.startsWith("#/dialog")) return;
+  if (current && current.id === id && current.live && h === `#/dialog/${id}/${current.n}`) return current.live();
   if (current && current.id === id && h === `#/dialog/${id}/${current.n}`) {
     const focusInForm = C.$("#formArea") && C.$("#formArea").contains(document.activeElement);
     current.drawDialog(); if (!focusInForm) current.drawForm();
@@ -380,6 +559,7 @@ function route(hash) {
   const parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean); // ["dialog", id?, n?]
   if (!parts[1]) return viewHome();
   if (parts[1] === "me") return viewMe();
+  if (parts[2] && parts[2][0] === "k") return viewKumyk(parts[1], +parts[2].slice(1));
   if (parts[2]) return viewLevel(parts[1], parts[2]);
   return viewPair(parts[1]);
 }

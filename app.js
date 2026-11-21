@@ -572,7 +572,7 @@ window.LN = {
   applyPair(id, data) {
     const pair = DialogUI.pairById(id); if (!pair) return;
     Object.assign(pair, { shared: true, owner: data.owner, members: data.members || [], memberInfo: data.memberInfo || {}, inviteCode: data.inviteCode || pair.inviteCode,
-      players: data.players || {}, done: data.done || {}, roles: data.roles || {} });
+      players: data.players || {}, done: data.done || {}, roles: data.roles || {}, kumyk: data.kumyk || {}, kvocab: data.kvocab || {} });
     save(false, true);
     DialogUI.refresh(id);
   },
