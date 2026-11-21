@@ -67,6 +67,7 @@ function strip(S) {
     c.data[n.id] = { mastered: (c.data[n.id] || {}).mastered || {} };
     delete n.memberInfo; delete n.members; delete n.inviteCode;
   });
+  ((c.dialog || {}).pairs || []).filter(p => p.shared).forEach(p => { delete p.players; delete p.memberInfo; delete p.members; delete p.inviteCode; });
   return c;
 }
 async function push(S) {
@@ -98,12 +99,15 @@ function watch(id) {
     if (!data || !(data.members || []).includes(state.user.uid)) { unwatch(id); window.LN.removeShared(id); return; }
     // Keep what you are typing right now (not sent yet) instead of the older cloud value.
     pending.forEach(p => { if (p.id === id) setPath(data, p.path, p.value); });
-    window.LN.applyShared(id, data);
+    if (data.kind === "dialog") window.LN.applyPair(id, data); else window.LN.applyShared(id, data);
   }, e => { console.warn(e); if (e.code === "permission-denied") { unwatch(id); window.LN.removeShared(id); } });
   watchers.set(id, unsub);
 }
 function unwatch(id) { const u = watchers.get(id); if (u) u(); watchers.delete(id); }
-function watchAll() { (window.LN.get().notebooks || []).filter(n => n.shared).forEach(n => watch(n.id)); }
+function watchAll() {
+  (window.LN.get().notebooks || []).filter(n => n.shared).forEach(n => watch(n.id));
+  (window.LN.pairs() || []).filter(p => p.shared).forEach(p => watch(p.id));
+}
 
 function edit(id, path, value) {
   if (!state.user) return;
@@ -139,7 +143,25 @@ async function join(id, code) {
   await fb.updateDoc(sref(id), "members", fb.arrayUnion(uid), new fb.FieldPath("memberInfo", uid), me(), "lastJoinCode", code);
   const snap = await fb.getDoc(sref(id));
   const data = snap.data();
+  if (data.kind === "dialog") {
+    const myProfile = window.LN.get().dialog?.me || { g: "", p: {} };
+    data.players = { ...(data.players || {}), [uid]: myProfile };
+    window.LN.addPair({ id, shared: true, created: Date.now() }, data);
+    await fb.updateDoc(sref(id), new fb.FieldPath("players", uid), myProfile);
+    watch(id);
+    return "dialog";
+  }
   window.LN.addShared({ id, known: data.known, targetName: data.targetName, color: data.color, shared: true, created: Date.now() }, data);
+  watch(id);
+  return "notebook";
+}
+// Dialogue partners: stored like a shared notebook (same security rules), with kind "dialog".
+async function createPair(id, profile) {
+  const uid = state.user.uid;
+  const doc = { kind: "dialog", owner: uid, members: [uid], memberInfo: { [uid]: me() }, inviteCode: newCode(), known: "de", targetName: "Arabisch Dialoge",
+    players: { [uid]: profile }, done: {}, roles: {}, created: fb.serverTimestamp() };
+  await fb.setDoc(sref(id), doc);
+  window.LN.addPair({ id, shared: true, created: Date.now() }, { ...doc, created: null });
   watch(id);
 }
 async function leave(nb) {
@@ -161,7 +183,7 @@ window.LN.cloud = {
   ready: () => authKnown,
   uid: () => state.user ? state.user.uid : null,
   signIn: () => fb ? signIn() : alert(t("err")),
-  edit, share, join, leave, removeMember, resetInvite, deleteShared,
+  edit, share, join, leave, removeMember, resetInvite, deleteShared, createPair,
 };
 
 async function signIn() {

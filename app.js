@@ -151,6 +151,7 @@ function route() {
   document.body.classList.remove("print-blank");
   refreshTopic = null; closeModal();
   if (parts[0] === "join") return viewJoin(parts[1], parts[2]);
+  if (parts[0] === "dialog") { setUi("de"); return DialogUI.route(location.hash); }
   const nb = parts[1] && nbById(parts[1]);
   if (nb) setUi(nb.known);
   if (parts[0] === "new") return viewSetup();
@@ -182,7 +183,8 @@ function viewHome() {
     ${installEvent ? `<button class="btn primary small" id="installBtn">⬇ ${L.install}</button>` : ""}</div>` : "";
   app.innerHTML = `
     <div class="hero"><div><h1>${L.my}</h1><p class="muted">${L.sub}</p></div></div>
-    <div class="shelf">${covers}<a class="cover add" href="#/new"><div><span>+</span><div>${L.newNb}</div></div></a></div>${tip}`;
+    <div class="shelf">${covers}<a class="cover add" href="#/new"><div><span>+</span><div>${L.newNb}</div></div></a></div>
+    <a class="dlg-entry" href="#/dialog"><span class="de-ic">💬</span><div><b>Dialoge üben · Arabisch A0–A1</b><small>12 Level zu zweit, angepasst an euch beide (m/w, Name, Herkunft, Arbeit, Hobbys …)</small></div><span class="de-go">→</span></a>${tip}`;
   const ib = $("#installBtn");
   if (ib) ib.onclick = async () => { installEvent.prompt(); await installEvent.userChoice; installEvent = null; viewHome(); };
 }
@@ -328,11 +330,12 @@ function viewJoin(id, code) {
   setBar("");
   const have = nbById(id);
   if (have && have.shared) return (location.hash = `#/nb/${id}`);
+  if (DialogUI.pairById(id)) return (location.hash = `#/dialog/${id}`);
   const box = (inner) => app.innerHTML = `<div class="join"><img src="icons/icon-192.png" alt=""><h1>${L.joinTitle}</h1>${inner}</div>`;
   if (!LN.cloud || !LN.cloud.ready()) return box(`<p class="muted">${L.loading}</p>`);
   if (!myUid()) { box(`<p class="muted">${L.joinText}</p><button class="btn primary" id="joinIn">${L.signInBtn}</button>`); $("#joinIn").onclick = () => LN.cloud.signIn(); return; }
   box(`<p class="muted">${L.joining}</p>`);
-  LN.cloud.join(id, code).then(() => { location.hash = `#/nb/${id}`; })
+  LN.cloud.join(id, code).then(kind => { location.hash = kind === "dialog" ? `#/dialog/${id}` : `#/nb/${id}`; })
     .catch(e => { console.warn(e); box(`<p>${L.joinFail}</p><a class="btn" href="#/">← ${L.my}</a>`); });
 }
 window.addEventListener("ln-auth", () => { if (location.hash.startsWith("#/join/")) route(); else if (onHome()) viewHome(); });
@@ -526,6 +529,9 @@ $("#importFile").onchange = async e => {
   e.target.value = "";
 };
 
+// ---------- Dialogue section (dialog.js) ----------
+DialogUI.init({ S: () => S, save, setBar, esc, $, app, myUid, modal, closeModal, colorFor });
+
 // ---------- Bridge for cloud sync (firebase-sync.js) ----------
 window.LN = {
   onSave: null,
@@ -558,7 +564,19 @@ window.LN = {
     save(false, true);
     if (refreshTopic) refreshTopic(id); else LN.rerender();
   },
-  removeShared(id) { if (!nbById(id)) return; removeNotebook(id); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/"; else route(); },
+  removeShared(id) {
+    if (DialogUI.pairById(id)) { DialogUI.removePair(id); save(); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/dialog"; else route(); return; }
+    if (!nbById(id)) return; removeNotebook(id); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/"; else route();
+  },
+  addPair(p, data) { DialogUI.addPair(p); LN.applyPair(p.id, data); },
+  applyPair(id, data) {
+    const pair = DialogUI.pairById(id); if (!pair) return;
+    Object.assign(pair, { shared: true, owner: data.owner, members: data.members || [], memberInfo: data.memberInfo || {}, inviteCode: data.inviteCode || pair.inviteCode,
+      players: data.players || {}, done: data.done || {}, roles: data.roles || {} });
+    save(false, true);
+    DialogUI.refresh(id);
+  },
+  pairs: () => DialogUI.data().pairs,
 };
 
 route();
