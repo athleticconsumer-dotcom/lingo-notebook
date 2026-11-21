@@ -112,7 +112,7 @@ window.DIALOG_LEVELS = [
   lines: [
   ["A","السَّلَامُ عَلَيْكُمْ.","Friede sei mit euch. (Assalamu alaikum)"],
   ["B","وَعَلَيْكُمُ السَّلَامُ.","Und mit euch sei Friede."],
-  ["A","أَهْلًا يَا {l:أَخِي|أُخْتِي}.","Hallo, {l:mein Bruder|meine Schwester}."],
+  ["A","أَهْلًا يَا {l:أَخِي|أُخْتِي}.","Hallo / willkommen, {l:mein Bruder|meine Schwester}."],
   ["B","أَهْلًا وَسَهْلًا.","Herzlich willkommen."],
   ["A","اِسْمِي {S.name}. مَا اسْمُ{l:كَ|كِ}؟","Ich heiße {S.nameDe}. Wie heißt du?"],
   ["B","اِسْمِي {S.name}.","Ich heiße {S.nameDe}."],
@@ -123,7 +123,7 @@ window.DIALOG_LEVELS = [
   ["A","بِخَيْرٍ، الْحَمْدُ لِلَّهِ.","Gut, Gott sei Dank."],
   ["B","مَعَ السَّلَامَةِ.","Auf Wiedersehen."],
   ["A","مَعَ السَّلَامَةِ، إِلَى اللِّقَاءِ.","Auf Wiedersehen, bis bald."]],
-  vocab: [["السَّلَامُ عَلَيْكُمْ","Friede sei mit euch"],["أَهْلًا","hallo"],["أَهْلًا وَسَهْلًا","herzlich willkommen"],["اِسْمٌ","Name"],
+  vocab: [["السَّلَامُ عَلَيْكُمْ","Friede sei mit euch"],["أَهْلًا","hallo, willkommen (von أَهْلٌ = Familie)"],["أَهْلًا وَسَهْلًا","herzlich willkommen (fühl dich wie zu Hause)"],["أَهْلًا بِكَ / بِكِ","willkommen dir (Antwort, m / w)"],["اِسْمٌ","Name"],
     ["اِسْمِي","mein Name"],["مَا؟","was?"],["أَنَا","ich"],["أَنْتَ / أَنْتِ","du (m / w)"],["أَخٌ","Bruder"],["أُخْتٌ","Schwester"],["كَيْفَ؟","wie?"],
     ["حَالٌ","Befinden"],["بِخَيْرٍ","gut (mir geht's gut)"],["الْحَمْدُ لِلَّهِ","Gott sei Dank"],["تَشَرَّفْتُ","freut mich"],["مَعَ السَّلَامَةِ","auf Wiedersehen"],["إِلَى اللِّقَاءِ","bis bald"]] },
 
