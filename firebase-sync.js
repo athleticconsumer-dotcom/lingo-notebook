@@ -65,7 +65,7 @@ function strip(S) {
   const c = JSON.parse(JSON.stringify(S));
   (c.notebooks || []).filter(n => n.shared).forEach(n => {
     c.data[n.id] = { mastered: (c.data[n.id] || {}).mastered || {} };
-    delete n.memberInfo; delete n.members; delete n.inviteCode;
+    delete n.memberInfo; delete n.members; delete n.inviteCode; delete n.games;
   });
   ((c.dialog || {}).pairs || []).filter(p => p.shared).forEach(p => { delete p.players; delete p.memberInfo; delete p.members; delete p.inviteCode; delete p.kumyk; delete p.kvocab; });
   return c;

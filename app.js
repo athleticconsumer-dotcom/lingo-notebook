@@ -158,6 +158,7 @@ function route() {
   if (parts[0] === "nb" && nb) {
     if (parts[2] === "t") return viewTopic(nb, parts[3]);
     if (parts[2] === "review") return viewReview(nb, parts[3]);
+    if (parts[2] === "play") return Games.view(nb, parts[3]);
     return viewNotebook(nb);
   }
   return viewHome();
@@ -362,6 +363,7 @@ function viewTopic(nb, tid) {
         <a class="btn small" href="#/nb/${nb.id}/review/${t.id}">🃏 ${L.review}</a>
         <button class="btn small" id="printBtn">🖨 ${L.print}</button>
         <button class="btn small ghost" id="printBlankBtn" title="${L.printBlank}">▢</button>
+        <a class="btn small primary" href="#/nb/${nb.id}/play/${t.id}">🎮 ${{ de: "Spiele", en: "Games", fr: "Jeux", ru: "Игры" }[S.uiLang] || "Games"}</a>
       </div></div>
     <div class="spread ${S.onlyBlanks ? "hide-filled" : ""}" id="spread">
       <section class="page">
@@ -531,6 +533,8 @@ $("#importFile").onchange = async e => {
 
 // ---------- Dialogue section (dialog.js) ----------
 DialogUI.init({ S: () => S, save, setBar, esc, $, app, myUid, modal, closeModal, colorFor });
+Games.init({ S: () => S, save, setBar, esc, $, app, myUid, D, word, topicName, lang: () => S.uiLang,
+  topic: id => TOPICS.find(x => x.id === id), knownName: nb => (KNOWN.find(k => k.code === nb.known) || {}).native || nb.known });
 
 // ---------- Bridge for cloud sync (firebase-sync.js) ----------
 window.LN = {
@@ -552,17 +556,18 @@ window.LN = {
   clear() { S = blankState(); save(false, true); location.hash = "#/"; route(); },
   // Shared notebooks
   ui: () => L,
-  rerender() { const h = location.hash; if (h.includes("/t/") || h.includes("/review")) return; route(); },
+  rerender() { const h = location.hash; if (h.includes("/t/") || h.includes("/review") || h.includes("/play/")) return; route(); },
   markShared(id, meta) { const nb = nbById(id); if (!nb) return; Object.assign(nb, { shared: true }, meta); save(); },
   addShared(nb, data) { if (!nbById(nb.id)) S.notebooks.push(nb); LN.applyShared(nb.id, data); },
   applyShared(id, data) {
     const nb = nbById(id); if (!nb) return;
-    Object.assign(nb, { shared: true, owner: data.owner, members: data.members || [], memberInfo: data.memberInfo || {}, inviteCode: data.inviteCode || nb.inviteCode,
+    Object.assign(nb, { shared: true, owner: data.owner, members: data.members || [], memberInfo: data.memberInfo || {}, inviteCode: data.inviteCode || nb.inviteCode, games: data.games || {},
       known: data.known || nb.known, targetName: data.targetName || nb.targetName, color: data.color || nb.color });
     const d = D(id);
     d.answers = data.answers || {}; d.authors = data.authors || {}; d.custom = data.custom || {}; d.notes = data.notes || {};
     save(false, true);
     if (refreshTopic) refreshTopic(id); else LN.rerender();
+    Games.onShared(id);
   },
   removeShared(id) {
     if (DialogUI.pairById(id)) { DialogUI.removePair(id); save(); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/dialog"; else route(); return; }
