@@ -168,6 +168,87 @@ window.COURSE = [
     ["مَا جِنْسِيَّتُكِ؟", "Was ist deine Nationalität? (zu einer Frau)", [{ d: "was?", s: [["مَا", "pr"]] }, { d: "deine Nationalität (w)", s: [["جِنْسِيَّتُ", "n"], ["كِ", "pr"]] }]]
   ]
 }
+,
+{
+  n: 3, ar: "الدَّرْسُ الثَّالِثُ", de: "Dars 3: Ja, nein, ich bin nicht … & Berufe", icon: "💼",
+  intro: "Ja/Nein-Fragen mit هَلْ, verneinen mit لَسْتُ (+ Akkusativ), „aber meine Herkunft ist …“ mit لَكِنْ أَصْلِي, Berufe und die weibliche Form mit ة.",
+
+  words: [
+    ["هَلْ", "Fragewort für Ja/Nein-Fragen", "p"],
+    ["نَعَمْ", "ja", "p"],
+    ["لَا", "nein", "p"],
+    ["لَسْتُ", "ich bin nicht", "v"],
+    ["لَكِنْ", "aber", "p"],
+    ["أَصْلٌ", "Herkunft, Ursprung", "n"],
+    ["أَصْلِي", "meine Herkunft (أَصْل + ي)", "n"],
+    ["عَرَبِيٌّ / عَرَبِيَّةٌ", "Araber / Araberin", "n"],
+    ["تُرْكِيٌّ / تُرْكِيَّةٌ", "Türke / Türkin", "n"],
+    ["كُرْدِيٌّ / كُرْدِيَّةٌ", "Kurde / Kurdin", "n"],
+    ["أَمْرِيكِيٌّ / أَمْرِيكِيَّةٌ", "Amerikaner / Amerikanerin", "n"],
+    ["مُتَزَوِّجٌ / مُتَزَوِّجَةٌ", "verheiratet (m) / verheiratet (w)", "n"],
+    ["مُهَنْدِسٌ / مُهَنْدِسَةٌ", "Ingenieur / Ingenieurin", "n"],
+    ["طَالِبٌ / طَالِبَةٌ", "Student, Schüler / Studentin, Schülerin", "n"],
+    ["طَبِيبٌ / طَبِيبَةٌ", "Arzt / Ärztin", "n"],
+    ["مُدَرِّسٌ / مُدَرِّسَةٌ", "Lehrer / Lehrerin", "n"],
+    ["طَالِبِي", "mein Schüler", "n"],
+    ["طَالِبُكَ", "dein Schüler (zu einem Mann)", "n"],
+    ["أَيْنَ طَالِبُكَ؟", "Wo ist dein Schüler?", "pr"],
+    ["هَلْ أَنْتَ رُوسِيٌّ؟", "Bist du Russe?", "p"],
+    ["لَسْتُ عَرَبِيًّا", "Ich bin kein Araber.", "v"],
+    ["لَسْتُ مُتَزَوِّجًا", "Ich bin nicht verheiratet.", "v"]
+  ],
+
+  grammar: [
+    { title: "Ja/Nein-Fragen mit هَلْ", ar: "هَلْ أَنْتَ رُوسِيٌّ؟ — نَعَمْ / لَا",
+      text: "هَلْ macht aus einem Satz eine Ja/Nein-Frage. Die Antwort ist نَعَمْ (ja) oder لَا (nein).",
+      rows: [["أَنْتَ طَالِبٌ", "Du bist Student.", "هَلْ أَنْتَ طَالِبٌ؟ = Bist du Student?"], ["أَنْتِ مُتَزَوِّجَةٌ", "Du (w) bist verheiratet.", "هَلْ أَنْتِ مُتَزَوِّجَةٌ؟"]] },
+    { title: "Verneinen mit لَسْتُ: Akkusativ!", ar: "أَنَا لَسْتُ …ً",
+      text: "لَسْتُ heißt „ich bin nicht“. Das Wort danach steht im Akkusativ: aus ـٌ wird ـً (mit Alif), wie die Tafel zeigt.",
+      rows: [["أَنَا عَرَبِيٌّ", "→ لَسْتُ عَرَبِيًّا", "Ich bin kein Araber."], ["أَنَا مُتَزَوِّجٌ", "→ لَسْتُ مُتَزَوِّجًا", "Ich bin nicht verheiratet."], ["أَنَا رُوسِيٌّ", "→ لَسْتُ رُوسِيًّا", "Ich bin kein Russe."]] },
+    { title: "لَكِنْ أَصْلِي …: aber meine Herkunft ist …", ar: "أَنَا أَمْرِيكِيٌّ لَكِنْ أَصْلِي …",
+      text: "لَكِنْ = aber. أَصْلِي = mein Ursprung, meine Herkunft (أَصْل + ي). So sagt man, woher die Familie eigentlich kommt.",
+      rows: [["أَنَا تُرْكِيَّةٌ لَكِنْ أَصْلِي كُرْدِيٌّ", "", "Ich bin Türkin, aber meine Herkunft ist kurdisch."]] },
+    { title: "Weiblich mit ة", ar: "مُتَزَوِّج + ة = مُتَزَوِّجَةٌ",
+      text: "Für eine Frau hängt man ة an. Das gilt für Berufe, Nationalitäten und Eigenschaften.",
+      rows: [["مُهَنْدِسٌ", "→ مُهَنْدِسَةٌ", "Ingenieur / Ingenieurin"], ["طَالِبٌ", "→ طَالِبَةٌ", "Student / Studentin"], ["طَبِيبٌ", "→ طَبِيبَةٌ", "Arzt / Ärztin"],
+        ["مُدَرِّسٌ", "→ مُدَرِّسَةٌ", "Lehrer / Lehrerin"], ["مُتَزَوِّجٌ", "→ مُتَزَوِّجَةٌ", "verheiratet"], ["تُرْكِيٌّ", "→ تُرْكِيَّةٌ", "Türke / Türkin"]] },
+    { title: "Wiederholung: mein und dein", ar: "طَالِبِي · طَالِبُكَ",
+      text: "Wie in Dars 1: ـِي = mein, ـُكَ = dein. أَيْنَ طَالِبُكَ؟ = Wo ist dein Schüler? — زَيْدٌ طَالِبِي = Zaid ist mein Schüler." }
+  ],
+
+  // Dialogue from the blackboard: A = فَاطِمَة, B = عُمَر
+  people: [["فَاطِمَة", "Fāṭima"], ["عُمَر", "ʿUmar"]],
+  dialog: [
+    ["A", "هَلْ أَنْتَ عَرَبِيٌّ؟", "Bist du Araber?", [
+      { d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "du (m)", s: [["أَنْتَ", "pr"]] }, { d: "Araber", s: [["عَرَبِيٌّ", "n"]] }]],
+    ["B", "لَا، لَسْتُ عَرَبِيًّا، أَنَا تُرْكِيٌّ.", "Nein, ich bin kein Araber, ich bin Türke.", [
+      { d: "nein", s: [["لَا", "p"]] }, { d: "ich bin nicht", s: [["لَسْ", "v"], ["تُ", "pr"]] }, { d: "Araber (Akk.)", s: [["عَرَبِيًّا", "n"]] }, { d: "ich", s: [["أَنَا", "pr"]] }, { d: "Türke", s: [["تُرْكِيٌّ", "n"]] }]],
+    ["A", "أَنَا تُرْكِيَّةٌ لَكِنْ أَصْلِي كُرْدِيٌّ.", "Ich bin Türkin, aber meine Herkunft ist kurdisch.", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "Türkin", s: [["تُرْكِيَّةٌ", "n"]] }, { d: "aber", s: [["لَكِنْ", "p"]] }, { d: "meine Herkunft", s: [["أَصْلِ", "n"], ["ي", "pr"]] }, { d: "kurdisch", s: [["كُرْدِيٌّ", "n"]] }]],
+    ["B", "هَلْ أَنْتِ مُتَزَوِّجَةٌ؟", "Bist du verheiratet?", [
+      { d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "du (w)", s: [["أَنْتِ", "pr"]] }, { d: "verheiratet (w)", s: [["مُتَزَوِّجَةٌ", "n"]] }]],
+    ["A", "نَعَمْ، أَنَا مُتَزَوِّجَةٌ، وَأَنْتَ؟", "Ja, ich bin verheiratet, und du?", [
+      { d: "ja", s: [["نَعَمْ", "p"]] }, { d: "ich", s: [["أَنَا", "pr"]] }, { d: "verheiratet (w)", s: [["مُتَزَوِّجَةٌ", "n"]] }, { d: "und du (m)?", s: [["وَ", "p"], ["أَنْتَ", "pr"]] }]],
+    ["B", "لَسْتُ مُتَزَوِّجًا.", "Ich bin nicht verheiratet.", [
+      { d: "ich bin nicht", s: [["لَسْ", "v"], ["تُ", "pr"]] }, { d: "verheiratet (Akk.)", s: [["مُتَزَوِّجًا", "n"]] }]],
+    ["A", "هَلْ أَنْتَ طَالِبٌ؟", "Bist du Student?", [
+      { d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "du (m)", s: [["أَنْتَ", "pr"]] }, { d: "Student", s: [["طَالِبٌ", "n"]] }]],
+    ["B", "لَا، أَنَا مُدَرِّسٌ، وَأَنْتِ؟", "Nein, ich bin Lehrer, und du?", [
+      { d: "nein", s: [["لَا", "p"]] }, { d: "ich", s: [["أَنَا", "pr"]] }, { d: "Lehrer", s: [["مُدَرِّسٌ", "n"]] }, { d: "und du (w)?", s: [["وَ", "p"], ["أَنْتِ", "pr"]] }]],
+    ["A", "أَنَا طَبِيبَةٌ. وَهَلْ زَيْدٌ طَالِبُكَ؟", "Ich bin Ärztin. Und ist Zaid dein Schüler?", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "Ärztin", s: [["طَبِيبَةٌ", "n"]] }, { d: "und (Frage)", s: [["وَ", "p"], ["هَلْ", "p"]] }, { d: "Zaid", s: [["زَيْدٌ", "n"]] }, { d: "dein Schüler", s: [["طَالِبُ", "n"], ["كَ", "pr"]] }]],
+    ["B", "نَعَمْ، زَيْدٌ طَالِبِي.", "Ja, Zaid ist mein Schüler.", [
+      { d: "ja", s: [["نَعَمْ", "p"]] }, { d: "Zaid", s: [["زَيْدٌ", "n"]] }, { d: "mein Schüler", s: [["طَالِبِ", "n"], ["ي", "pr"]] }]]
+  ],
+
+  extra: [
+    ["هَلْ أَنْتَ رُوسِيٌّ؟", "Bist du Russe?", [{ d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "du (m)", s: [["أَنْتَ", "pr"]] }, { d: "Russe", s: [["رُوسِيٌّ", "n"]] }]],
+    ["أَنَا لَسْتُ رُوسِيًّا.", "Ich bin kein Russe.", [{ d: "ich", s: [["أَنَا", "pr"]] }, { d: "bin nicht", s: [["لَسْ", "v"], ["تُ", "pr"]] }, { d: "Russe (Akk.)", s: [["رُوسِيًّا", "n"]] }]],
+    ["أَنَا أَمْرِيكِيٌّ لَكِنْ أَصْلِي …", "Ich bin Amerikaner, aber meine Herkunft ist …", [{ d: "ich", s: [["أَنَا", "pr"]] }, { d: "Amerikaner", s: [["أَمْرِيكِيٌّ", "n"]] }, { d: "aber", s: [["لَكِنْ", "p"]] }, { d: "meine Herkunft", s: [["أَصْلِ", "n"], ["ي", "pr"]] }, { d: "…", s: [["…", "n"]] }]],
+    ["أَيْنَ طَالِبُكَ؟", "Wo ist dein Schüler?", [{ d: "wo?", s: [["أَيْنَ", "pr"]] }, { d: "dein Schüler", s: [["طَالِبُ", "n"], ["كَ", "pr"]] }]],
+    ["مُهَنْدِسٌ · طَالِبٌ · طَبِيبٌ · مُدَرِّسٌ", "Ingenieur · Student · Arzt · Lehrer", [{ d: "Ingenieur", s: [["مُهَنْدِسٌ", "n"]] }, { d: "Student", s: [["طَالِبٌ", "n"]] }, { d: "Arzt", s: [["طَبِيبٌ", "n"]] }, { d: "Lehrer", s: [["مُدَرِّسٌ", "n"]] }]]
+  ]
+}
 ];
 
 window.COURSE_TYPES = {

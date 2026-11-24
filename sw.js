@@ -1,6 +1,6 @@
 // Offline support: the app files are cached, so the notebook opens without internet.
 // Files are loaded fresh from the network when online (so updates arrive right away) and from the cache when offline.
-const CACHE = "lingo-notebook-v9";
+const CACHE = "lingo-notebook-v10";
 const FILES = ["./", "index.html", "style.css", "app.js", "firebase-sync.js", "words.js", "words-2.js", "words-3.js",
   "words-4.js", "words-5.js", "words-6.js", "dialogs-data.js", "dialogs-kumyk.js", "dialog.js", "games.js", "course-data.js", "course.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 
