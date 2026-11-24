@@ -93,6 +93,81 @@ window.COURSE = [
     ["كِتَابِي · بَيْتُكَ", "mein Buch · dein Haus", [{ d: "mein Buch", s: [["كِتَابِ", "n"], ["ي", "pr"]] }, { d: "dein Haus", s: [["بَيْتُ", "n"], ["كَ", "pr"]] }]]
   ]
 }
+,
+{
+  n: 2, ar: "الدَّرْسُ الثَّانِي", de: "Dars 2: Herkunft & Nationalität", icon: "🌍",
+  intro: "Bestimmt und unbestimmt (الْبَيْتُ / بَيْتٌ), die drei Tanwīn-Formen, die Endung ـِيّ für Herkunft und Zugehörigkeit, und nach der Nationalität fragen.",
+
+  words: [
+    ["الْبَيْتُ", "das Haus (bestimmt, mit ال)", "n"],
+    ["بَيْتٌ", "ein Haus (unbestimmt, mit Tanwīn)", "n"],
+    ["خَيْرًا", "Gutes (Tanwīn mit Fatha, z. B. جَزَاكَ اللَّهُ خَيْرًا)", "n"],
+    ["جِنْسِيَّةٌ", "Nationalität, Staatsangehörigkeit", "n"],
+    ["مَا جِنْسِيَّتُكَ؟ / مَا جِنْسِيَّتُكِ؟", "Was ist deine Nationalität? / Was ist deine Nationalität? (zu einer Frau)", "pr"],
+    ["أُخْتِي", "meine Schwester", "n"],
+    ["مِصْرُ", "Ägypten", "n"],
+    ["الصِّينُ", "China", "n"],
+    ["رُوسِيَا", "Russland", "n"],
+    ["أَلْمَانِيَا", "Deutschland", "n"],
+    ["الشِّيشَانُ", "Tschetschenien", "n"],
+    ["كَنَدَا", "Kanada", "n"],
+    ["الْيَابَانُ", "Japan", "n"],
+    ["مِصْرِيٌّ / مِصْرِيَّةٌ", "Ägypter / Ägypterin", "n"],
+    ["صِينِيٌّ / صِينِيَّةٌ", "Chinese / Chinesin", "n"],
+    ["رُوسِيٌّ / رُوسِيَّةٌ", "Russe / Russin", "n"],
+    ["أَلْمَانِيٌّ / أَلْمَانِيَّةٌ", "Deutscher / Deutsche", "n"],
+    ["شِيشَانِيٌّ / شِيشَانِيَّةٌ", "Tschetschene / Tschetschenin", "n"],
+    ["كَنَدِيٌّ / كَنَدِيَّةٌ", "Kanadier / Kanadierin", "n"],
+    ["يَابَانِيٌّ / يَابَانِيَّةٌ", "Japaner / Japanerin", "n"],
+    ["إِسْلَامٌ", "Islam", "n"],
+    ["إِسْلَامِيٌّ", "islamisch", "n"],
+    ["بَيْتِيٌّ", "hausgemacht, häuslich", "n"],
+    ["مَدْرَسَةٌ", "Schule", "n"],
+    ["مَدْرَسِيٌّ", "Schul-, schulisch", "n"],
+    ["كِتَابٌ مَدْرَسِيٌّ", "ein Schulbuch", "n"],
+    ["الْكِتَابُ", "das Buch (bestimmt)", "n"]
+  ],
+
+  grammar: [
+    { title: "Bestimmt und unbestimmt", ar: "بَيْتٌ ← الْبَيْتُ",
+      text: "Ohne ال ist ein Wort unbestimmt und bekommt Tanwīn: بَيْتٌ = ein Haus. Mit ال ist es bestimmt, dann fällt das Tanwīn weg: الْبَيْتُ = das Haus. ال und Tanwīn stehen nie zusammen.",
+      rows: [["بَيْتٌ", "ein Haus", "كِتَابٌ = ein Buch"], ["الْبَيْتُ", "das Haus", "الْكِتَابُ = das Buch"]] },
+    { title: "Die drei Tanwīn-Formen", ar: "ـٌ · ـً · ـٍ",
+      text: "Tanwīn ist ein „n“ am Wortende. Bei ـً schreibt man meist noch ein Alif dazu: خَيْرًا.",
+      rows: [["ـٌ", "-un (Nominativ)", "بَيْتٌ · كِتَابٌ"], ["ـً", "-an (Akkusativ)", "خَيْرًا · أَهْلًا"], ["ـٍ", "-in (Genitiv)", "بِخَيْرٍ"]] },
+    { title: "هَذَا كِتَابٌ oder هَذَا الْكِتَابُ?", ar: "هَذَا كِتَابٌ · هَذَا الْكِتَابُ",
+      text: "هَذَا + unbestimmtes Wort ist ein ganzer Satz: هَذَا كِتَابٌ = Das ist ein Buch. هَذَا + bestimmtes Wort heißt „dieses …“: هَذَا الْكِتَابُ مِنْ مِصْرَ = Dieses Buch ist aus Ägypten." },
+    { title: "Die Endung ـِيٌّ: Herkunft und Zugehörigkeit", ar: "إِسْلَام + ـِيّ = إِسْلَامِيٌّ",
+      text: "Mit ـِيٌّ macht man aus einem Wort „zugehörig zu …“. So entstehen Nationalitäten und Adjektive. Endet das Wort auf ة oder ـيَا, fällt das weg. Für eine Frau kommt noch ة dazu: ـِيَّةٌ.",
+      rows: [["مِصْر", "→ مِصْرِيٌّ", "Ägypter · مِصْرِيَّةٌ Ägypterin"], ["رُوسِيَا", "→ رُوسِيٌّ", "ـيَا fällt weg"], ["مَدْرَسَة", "→ مَدْرَسِيٌّ", "ة fällt weg: Schul-"],
+        ["بَيْت", "→ بَيْتِيٌّ", "hausgemacht"], ["إِسْلَام", "→ إِسْلَامِيٌّ", "islamisch"], ["الْيَابَان", "→ يَابَانِيٌّ", "ال fällt weg · يَابَانِيَّةٌ"]] },
+    { title: "ة wird zu ت, wenn eine Endung kommt", ar: "جِنْسِيَّة + كَ = جِنْسِيَّتُكَ",
+      text: "Hängt man an ein Wort mit ة eine Endung wie ـكَ oder ـِي an, wird aus ة ein normales ت.",
+      rows: [["جِنْسِيَّة", "+ كَ", "جِنْسِيَّتُكَ = deine Nationalität (m)"], ["جِنْسِيَّة", "+ كِ", "جِنْسِيَّتُكِ = deine Nationalität (w)"], ["جِنْسِيَّة", "+ ي", "جِنْسِيَّتِي = meine Nationalität"]] },
+    { title: "Länder und Nationalitäten", ar: "مِصْر · الصِّين · رُوسِيَا · أَلْمَانِيَا · الشِّيشَان",
+      rows: [["مِصْر", "Ägypten", "مِصْرِيٌّ / مِصْرِيَّةٌ"], ["الصِّين", "China", "صِينِيٌّ / صِينِيَّةٌ"], ["رُوسِيَا", "Russland", "رُوسِيٌّ / رُوسِيَّةٌ"],
+        ["أَلْمَانِيَا", "Deutschland", "أَلْمَانِيٌّ / أَلْمَانِيَّةٌ"], ["الشِّيشَان", "Tschetschenien", "شِيشَانِيٌّ / شِيشَانِيَّةٌ"], ["كَنَدَا", "Kanada", "كَنَدِيٌّ / كَنَدِيَّةٌ"], ["الْيَابَان", "Japan", "يَابَانِيٌّ / يَابَانِيَّةٌ"]] }
+  ],
+
+  // Dialogue from the blackboard: A = a sister, B = a brother
+  people: [["الْأُخْت", "Schwester"], ["الْأَخ", "Bruder"]],
+  dialog: [
+    ["A", "مَا جِنْسِيَّتُكَ يَا أَخِي؟", "Was ist deine Nationalität, mein Bruder?", [
+      { d: "was?", s: [["مَا", "pr"]] }, { d: "deine Nationalität", s: [["جِنْسِيَّتُ", "n"], ["كَ", "pr"]] }, { d: "o (Anrede)", s: [["يَا", "p"]] }, { d: "mein Bruder", s: [["أَخِ", "n"], ["ي", "pr"]] }]],
+    ["B", "أَنَا كَنَدِيٌّ، وَأَنْتِ يَا أُخْتِي؟", "Ich bin Kanadier, und du, meine Schwester?", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "Kanadier", s: [["كَنَدِيٌّ", "n"]] }, { d: "und du (w)", s: [["وَ", "p"], ["أَنْتِ", "pr"]] }, { d: "o (Anrede)", s: [["يَا", "p"]] }, { d: "meine Schwester", s: [["أُخْتِ", "n"], ["ي", "pr"]] }]],
+    ["A", "أَنَا يَابَانِيَّةٌ.", "Ich bin Japanerin.", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "Japanerin", s: [["يَابَانِيَّةٌ", "n"]] }]]
+  ],
+
+  extra: [
+    ["هَذَا الْكِتَابُ مِنْ مِصْر.", "Dieses Buch ist aus Ägypten.", [{ d: "dies(es)", s: [["هَذَا", "pr"]] }, { d: "das Buch", s: [["الْكِتَابُ", "n"]] }, { d: "aus", s: [["مِنْ", "p"]] }, { d: "Ägypten", s: [["مِصْر", "n"]] }]],
+    ["هَذَا كِتَابٌ مَدْرَسِيٌّ.", "Das ist ein Schulbuch.", [{ d: "das", s: [["هَذَا", "pr"]] }, { d: "ein Buch", s: [["كِتَابٌ", "n"]] }, { d: "Schul-", s: [["مَدْرَسِيٌّ", "n"]] }]],
+    ["الْبَيْتُ · بَيْتٌ", "das Haus · ein Haus", [{ d: "das Haus", s: [["الْ", "p"], ["بَيْتُ", "n"]] }, { d: "ein Haus", s: [["بَيْتٌ", "n"]] }]],
+    ["إِسْلَامِيٌّ · بَيْتِيٌّ · مَدْرَسِيٌّ", "islamisch · hausgemacht · Schul-", [{ d: "islamisch", s: [["إِسْلَامِ", "n"], ["يٌّ", "n"]] }, { d: "hausgemacht", s: [["بَيْتِ", "n"], ["يٌّ", "n"]] }, { d: "Schul-", s: [["مَدْرَسِ", "n"], ["يٌّ", "n"]] }]],
+    ["مَا جِنْسِيَّتُكِ؟", "Was ist deine Nationalität? (zu einer Frau)", [{ d: "was?", s: [["مَا", "pr"]] }, { d: "deine Nationalität (w)", s: [["جِنْسِيَّتُ", "n"], ["كِ", "pr"]] }]]
+  ]
+}
 ];
 
 window.COURSE_TYPES = {
