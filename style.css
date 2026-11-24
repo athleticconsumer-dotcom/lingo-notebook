@@ -343,3 +343,35 @@ textarea.blank,.own textarea{resize:none;overflow:hidden;display:block;white-spa
 .g-trophy{font-size:4rem}
 @media (max-width:420px){ .g-opts{grid-template-columns:1fr} .g-q{font-size:1.6rem} .mem{font-size:.75rem} }
 .mem:not(.open):not(.found) span{display:none}
+
+/* ---------- Arabic beginner course ---------- */
+.course-entry{background:linear-gradient(135deg,#2e7d4f,#1f6f78);margin-top:12px}
+.lvl.soon{opacity:.55;border-style:dashed;box-shadow:none}
+.c-tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0 16px;padding-bottom:4px}
+.c-tabs a{white-space:nowrap;text-decoration:none;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:.9rem}
+.c-tabs a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.c-voc .v-ar{font-size:1.35rem}
+.k-legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--ink-soft);margin:10px 0}
+.k-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.gram h3{margin-bottom:4px}
+.gram-ar{font-family:"Noto Naskh Arabic",serif;font-size:1.6rem;margin:4px 0 8px;text-align:right}
+.gram p{margin:6px 0}
+.gram-rows{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.gr{display:grid;grid-template-columns:70px 1fr 1.4fr;gap:10px;align-items:center;background:var(--paper);border-radius:10px;padding:8px 10px}
+.gr b{font-family:"Noto Naskh Arabic",serif;font-size:1.35rem;text-align:center}
+.gr-ex{font-family:"Noto Naskh Arabic",serif;font-size:1.1rem;text-align:right}
+.kitab-print{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;box-shadow:var(--shadow)}
+.k-line{padding:12px 0;border-bottom:1px dashed var(--grid)}
+.k-who{font-family:"Noto Naskh Arabic",serif;font-weight:700;font-size:1.1rem;color:var(--ink-soft)}
+.k-words{display:flex;flex-wrap:wrap;gap:6px 14px;margin:4px 0}
+.kb{display:inline-flex;flex-direction:column;align-items:center;min-width:44px}
+.kb-ar{font-family:"Noto Naskh Arabic",serif;font-size:1.9rem;line-height:1.7}
+.kb-de{font-size:.72rem;color:var(--ink-soft);text-align:center;max-width:110px;line-height:1.2}
+.k-tr{font-size:.85rem;color:var(--ink-soft);margin-top:4px}
+@media (max-width:560px){ .gr{grid-template-columns:56px 1fr} .gr-ex{grid-column:1 / -1} .kb-ar{font-size:1.6rem} }
+@media print{
+  body.print-kitab .bar, body.print-kitab .lvl-title, body.print-kitab .c-tabs, body.print-kitab #cDone, body.print-kitab .row, body.print-kitab .muted{display:none!important}
+  body.print-kitab .kitab-print{border:none;box-shadow:none;padding:0}
+  body.print-kitab .k-legend{display:flex!important}
+}
+.kb-de{unicode-bidi:isolate}

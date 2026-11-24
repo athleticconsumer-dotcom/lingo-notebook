@@ -152,6 +152,7 @@ function route() {
   refreshTopic = null; closeModal();
   if (parts[0] === "join") return viewJoin(parts[1], parts[2]);
   if (parts[0] === "dialog") { setUi("de"); return DialogUI.route(location.hash); }
+  if (parts[0] === "course") { setUi("de"); return Course.route(parts); }
   const nb = parts[1] && nbById(parts[1]);
   if (nb) setUi(nb.known);
   if (parts[0] === "new") return viewSetup();
@@ -185,7 +186,8 @@ function viewHome() {
   app.innerHTML = `
     <div class="hero"><div><h1>${L.my}</h1><p class="muted">${L.sub}</p></div></div>
     <div class="shelf">${covers}<a class="cover add" href="#/new"><div><span>+</span><div>${L.newNb}</div></div></a></div>
-    <a class="dlg-entry" href="#/dialog"><span class="de-ic">💬</span><div><b>Dialoge üben · Arabisch A0–A1</b><small>12 Level zu zweit, angepasst an euch beide (m/w, Name, Herkunft, Arbeit, Hobbys …)</small></div><span class="de-go">→</span></a>${tip}`;
+    <a class="dlg-entry" href="#/dialog"><span class="de-ic">💬</span><div><b>Dialoge üben · Arabisch A0–A1</b><small>12 Level zu zweit, angepasst an euch beide (m/w, Name, Herkunft, Arbeit, Hobbys …)</small></div><span class="de-go">→</span></a>
+    <a class="dlg-entry course-entry" href="#/course"><span class="de-ic">📗</span><div><b>Arabisch-Anfängerkurs</b><small>Lektion für Lektion nach der Tafel: Wörter, Grammatik, Dialog, Kitab-Seite, Spiele</small></div><span class="de-go">→</span></a>${tip}`;
   const ib = $("#installBtn");
   if (ib) ib.onclick = async () => { installEvent.prompt(); await installEvent.userChoice; installEvent = null; viewHome(); };
 }
@@ -533,6 +535,7 @@ $("#importFile").onchange = async e => {
 
 // ---------- Dialogue section (dialog.js) ----------
 DialogUI.init({ S: () => S, save, setBar, esc, $, app, myUid, modal, closeModal, colorFor });
+Course.init({ S: () => S, save, setBar, esc, $, app });
 Games.init({ S: () => S, save, setBar, esc, $, app, myUid, D, word, topicName, lang: () => S.uiLang,
   topic: id => TOPICS.find(x => x.id === id), knownName: nb => (KNOWN.find(k => k.code === nb.known) || {}).native || nb.known });
 
@@ -556,7 +559,7 @@ window.LN = {
   clear() { S = blankState(); save(false, true); location.hash = "#/"; route(); },
   // Shared notebooks
   ui: () => L,
-  rerender() { const h = location.hash; if (h.includes("/t/") || h.includes("/review") || h.includes("/play/")) return; route(); },
+  rerender() { const h = location.hash; if (h.includes("/t/") || h.includes("/review") || h.includes("/play") || h.startsWith("#/course")) return; route(); },
   markShared(id, meta) { const nb = nbById(id); if (!nb) return; Object.assign(nb, { shared: true }, meta); save(); },
   addShared(nb, data) { if (!nbById(nb.id)) S.notebooks.push(nb); LN.applyShared(nb.id, data); },
   applyShared(id, data) {

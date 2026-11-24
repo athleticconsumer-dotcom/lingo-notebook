@@ -62,30 +62,37 @@ function entries(nb, tid) {
   return out.filter(e => { const k = norm(e.a); if (seen.has(k)) return false; seen.add(k); return true; });
 }
 const settings = () => (C.S().gameView ||= { dir: 0, mode: "solo", p2: "" });
-const myName = nb => { const m = (nb.memberInfo || {})[C.myUid()]; return (m && m.name && m.name.split(" ")[0]) || t("you"); };
+const myName = nb => { if (!nb) return t("you"); const m = (nb.memberInfo || {})[C.myUid()]; return (m && m.name && m.name.split(" ")[0]) || t("you"); };
 const duelOf = (nb, tid) => (nb.games || {})[tid] || null;
 const cloud = () => window.LN && LN.cloud;
 
 let G = null;        // running game
-let menuOpen = null; // { nb, tid } while the game menu is shown
+let menuOpen = null; // the word source while the game menu is shown
+
+// A "source" is any list of words to play with: a notebook topic, or a course lesson.
+function view(nb, tid) {
+  const topic = C.topic(tid); if (!topic) return (location.hash = `#/nb/${nb.id}`);
+  open({ nb, tid, title: C.topicName(topic, nb.known), icon: topic.icon, back: `#/nb/${nb.id}/t/${tid}`,
+    kn: C.knownName(nb), tg: nb.targetName, entries: () => entries(nb, tid) });
+}
 
 // ---------- Menu ----------
-function view(nb, tid) {
-  G = null; menuOpen = { nb, tid };
-  const topic = C.topic(tid); if (!topic) return (location.hash = `#/nb/${nb.id}`);
-  const all = entries(nb, tid), st = settings();
-  const canDuel = nb.shared && (nb.members || []).length > 1 && C.myUid();
+function open(src) {
+  G = null; menuOpen = src;
+  const nb = src.nb, tid = src.tid;
+  const all = src.entries(), st = settings();
+  const canDuel = !!(nb && nb.shared && (nb.members || []).length > 1 && C.myUid());
   if (st.mode === "duel" && !canDuel) st.mode = "solo";
-  const kn = C.knownName(nb), tg = nb.targetName;
-  const duel = duelOf(nb, tid), uid = C.myUid();
+  const kn = src.kn, tg = src.tg;
+  const duel = nb ? duelOf(nb, tid) : null, uid = C.myUid();
   const freshDuel = duel && Date.now() - (duel.created || 0) < 6 * 3600e3;
   const banner = freshDuel && duel.by !== uid && !(duel.players || {})[uid]
     ? `<div class="g-banner">⚔️ ${esc(t("joinDuel", { n: duel.byName || "?", g: t(duel.kind) }))} <button class="btn primary small" id="gJoin">${t("joinBtn")}</button></div>` : "";
   const last = freshDuel && duel.players && Object.keys(duel.players).length ? `<div class="g-last"><b>${t("lastDuel")} · ${GAME_ICON[duel.kind]} ${t(duel.kind)}</b>${board(nb, duel)}</div>` : "";
-  C.setBar(`<a class="btn ghost small" href="#/nb/${nb.id}/t/${tid}">← ${esc(C.topicName(topic, nb.known))}</a>`);
+  C.setBar(`<a class="btn ghost small" href="${src.back}">← ${esc(src.title)}</a>`);
   C.app.innerHTML = `<div class="g-page">
     <h1>🎮 ${t("games")}</h1>
-    <div class="muted">${topic.icon} ${esc(C.topicName(topic, nb.known))} · ${all.length} ${t("words")}</div>
+    <div class="muted">${src.icon} ${esc(src.title)} · ${all.length} ${t("words")}</div>
     ${banner}${last}
     ${all.length < 4 ? `<div class="empty" style="margin-top:18px">${t("needMore")}</div>` : `
     <div class="step g-set">
@@ -94,8 +101,8 @@ function view(nb, tid) {
       <div class="df"><div class="seg wrap" id="gMode">
         <button data-v="solo" class="${st.mode === "solo" ? "on" : ""}">👤 ${t("solo")}</button>
         <button data-v="hot" class="${st.mode === "hot" ? "on" : ""}">👥 ${t("hot")}</button>
-        <button data-v="duel" class="${st.mode === "duel" ? "on" : ""}" ${canDuel ? "" : "disabled"}>⚔️ ${t("duel")}</button></div>
-        <small class="muted">${st.mode === "duel" ? t("duelD") : !canDuel ? t("duelNo") : ""}</small></div>
+        ${nb ? `<button data-v="duel" class="${st.mode === "duel" ? "on" : ""}" ${canDuel ? "" : "disabled"}>⚔️ ${t("duel")}</button>` : ""}</div>
+        <small class="muted">${st.mode === "duel" ? t("duelD") : !canDuel && nb ? t("duelNo") : ""}</small></div>
       ${st.mode === "hot" ? `<div class="df"><label>${t("player2")}</label><input class="field" id="gP2" value="${esc(st.p2 || "")}" placeholder="z. B. Aisha" style="max-width:260px"></div>` : ""}
     </div>
     <div class="g-cards">
@@ -103,24 +110,25 @@ function view(nb, tid) {
     </div>`}
   </div>`;
   const bind = (sel, fn) => C.app.querySelectorAll(sel).forEach(fn);
-  bind("#gDir button", b => b.onclick = () => { st.dir = +b.dataset.v; C.save(); view(nb, tid); });
-  bind("#gMode button", b => b.onclick = () => { st.mode = b.dataset.v; C.save(); view(nb, tid); });
+  bind("#gDir button", b => b.onclick = () => { st.dir = +b.dataset.v; C.save(); open(src); });
+  bind("#gMode button", b => b.onclick = () => { st.mode = b.dataset.v; C.save(); open(src); });
   const p2 = C.$("#gP2"); if (p2) p2.oninput = () => { st.p2 = p2.value; C.save(); };
   bind(".g-card", b => b.onclick = () => {
-    if (st.mode === "duel") return startDuel(nb, tid, b.dataset.g);
-    start(nb, tid, b.dataset.g, { mode: st.mode, dir: st.dir, seed: Math.floor(Math.random() * 1e9) });
+    if (st.mode === "duel") return startDuel(src, b.dataset.g);
+    start(src, b.dataset.g, { mode: st.mode, dir: st.dir, seed: Math.floor(Math.random() * 1e9) });
   });
-  const j = C.$("#gJoin"); if (j) j.onclick = () => start(nb, tid, duel.kind, { mode: "duel", dir: duel.dir, seed: duel.seed, duelId: duel.id });
+  const j = C.$("#gJoin"); if (j) j.onclick = () => start(src, duel.kind, { mode: "duel", dir: duel.dir, seed: duel.seed, duelId: duel.id });
 }
 
 // ---------- Duel (online) ----------
-function startDuel(nb, tid, kind) {
+function startDuel(src, kind) {
+  const nb = src.nb, tid = src.tid;
   if (!C.myUid() || !cloud()) return alert(t("signIn"));
   const seed = Math.floor(Math.random() * 1e9), id = Math.random().toString(36).slice(2, 9), uid = C.myUid();
   const duel = { id, kind, dir: settings().dir, seed, by: uid, byName: myName(nb), created: Date.now(), players: {} };
   nb.games ||= {}; nb.games[tid] = duel;
   cloud().edit(nb.id, ["games", tid], duel);
-  start(nb, tid, kind, { mode: "duel", dir: duel.dir, seed, duelId: id });
+  start(src, kind, { mode: "duel", dir: duel.dir, seed, duelId: id });
 }
 function pushDuel() {
   if (!G || G.mode !== "duel" || !cloud()) return;
@@ -138,12 +146,13 @@ function board(nb, duel) {
 }
 
 // ---------- Game engine ----------
-function start(nb, tid, kind, { mode, dir, seed, duelId }) {
+function start(src, kind, { mode, dir, seed, duelId }) {
   menuOpen = null;
-  const all = entries(nb, tid), r = rng(seed);
+  const nb = src.nb, tid = src.tid;
+  const all = src.entries(), r = rng(seed);
   const show = e => dir ? { q: e.a, a: e.q } : { q: e.q, a: e.a };
   const p1 = mode === "hot" ? (myName(nb) === t("you") ? "Spieler 1" : myName(nb)) : myName(nb);
-  G = { nb, tid, kind, mode, dir, seed, duelId, players: mode === "hot" ? [{ name: p1, score: 0 }, { name: settings().p2 || "Spieler 2", score: 0 }] : [{ name: p1, score: 0 }],
+  G = { src, nb, tid, kind, mode, dir, seed, duelId, players: mode === "hot" ? [{ name: p1, score: 0 }, { name: settings().p2 || "Spieler 2", score: 0 }] : [{ name: p1, score: 0 }],
     turn: 0, i: 0, moves: 0, t0: Date.now(), ms: 0, done: false, answered: false };
   if (kind === "memory") {
     const pairs = shuffle(all, r).slice(0, Math.min(8, all.length)).map(show);
@@ -189,7 +198,7 @@ function render() {
   C.setBar("");
   if (G.done) return renderEnd();
   C.app.innerHTML = `<div class="g-page play">${header()}<div id="gBody"></div></div>`;
-  C.$("#gQuit").onclick = () => { if (confirm(t("leaveQ"))) { const nb = G.nb, tid = G.tid; G = null; view(nb, tid); } };
+  C.$("#gQuit").onclick = () => { if (confirm(t("leaveQ"))) { const src = G.src; G = null; open(src); } };
   ({ memory: renderMemory, quiz: renderQuiz, write: renderWrite })[G.kind]();
 }
 const nextTurn = () => { if (G.mode === "hot") G.turn = 1 - G.turn; };
@@ -257,7 +266,7 @@ function renderMemory() {
 }
 
 function renderEnd() {
-  const nb = G.nb, tid = G.tid;
+  const nb = G.nb, tid = G.tid, src = G.src;
   let result;
   if (G.mode === "hot") {
     const [a, b] = G.players;
@@ -275,15 +284,15 @@ function renderEnd() {
     <div class="row" style="justify-content:center;margin-top:20px">
       <button class="btn" id="gBack">← ${t("back")}</button>
       ${G.mode !== "duel" ? `<button class="btn primary" id="gAgain">↻ ${t("again")}</button>` : ""}</div></div>`;
-  C.$("#gBack").onclick = () => { G = null; view(nb, tid); };
-  const ag = C.$("#gAgain"); if (ag) ag.onclick = () => start(nb, tid, G.kind, { mode: G.mode, dir: G.dir, seed: Math.floor(Math.random() * 1e9) });
+  C.$("#gBack").onclick = () => { G = null; open(src); };
+  const ag = C.$("#gAgain"); if (ag) ag.onclick = () => start(src, G.kind, { mode: G.mode, dir: G.dir, seed: Math.floor(Math.random() * 1e9) });
 }
 
 // A friend's change arrived (shared notebook): update the scoreboard or the menu.
 function onShared(id) {
-  if (G && G.nb.id === id) { if (G.mode === "duel") { const el = C.$("#gScore"); if (el) el.innerHTML = liveScore(); if (G.done) renderEnd(); } return; }
-  if (menuOpen && menuOpen.nb.id === id && location.hash.includes("/play/")) view(menuOpen.nb, menuOpen.tid);
+  if (G && G.nb && G.nb.id === id) { if (G.mode === "duel") { const el = C.$("#gScore"); if (el) el.innerHTML = liveScore(); if (G.done) renderEnd(); } return; }
+  if (menuOpen && menuOpen.nb && menuOpen.nb.id === id && location.hash.includes("/play/")) open(menuOpen);
 }
 
-return { init(ctx) { C = ctx; }, view, onShared, isPlaying: () => !!G, entries, norm };
+return { init(ctx) { C = ctx; }, view, open, onShared, isPlaying: () => !!G, entries, norm };
 })();
