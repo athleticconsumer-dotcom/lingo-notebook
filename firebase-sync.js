@@ -67,6 +67,7 @@ function strip(S) {
     c.data[n.id] = { mastered: (c.data[n.id] || {}).mastered || {} };
     delete n.memberInfo; delete n.members; delete n.inviteCode; delete n.games;
   });
+  (c.journeys || []).filter(j => j.mode === "online").forEach(j => { delete j.members; delete j.memberInfo; delete j.inviteCode; delete j.progress; });
   ((c.dialog || {}).pairs || []).filter(p => p.shared).forEach(p => { delete p.players; delete p.memberInfo; delete p.members; delete p.inviteCode; delete p.kumyk; delete p.kvocab; });
   return c;
 }
@@ -99,7 +100,9 @@ function watch(id) {
     if (!data || !(data.members || []).includes(state.user.uid)) { unwatch(id); window.LN.removeShared(id); return; }
     // Keep what you are typing right now (not sent yet) instead of the older cloud value.
     pending.forEach(p => { if (p.id === id) setPath(data, p.path, p.value); });
-    if (data.kind === "dialog") window.LN.applyPair(id, data); else window.LN.applyShared(id, data);
+    if (data.kind === "dialog") window.LN.applyPair(id, data);
+    else if (data.kind === "journey") window.LN.applyJourney(id, data);
+    else window.LN.applyShared(id, data);
   }, e => { console.warn(e); if (e.code === "permission-denied") { unwatch(id); window.LN.removeShared(id); } });
   watchers.set(id, unsub);
 }
@@ -107,6 +110,7 @@ function unwatch(id) { const u = watchers.get(id); if (u) u(); watchers.delete(i
 function watchAll() {
   (window.LN.get().notebooks || []).filter(n => n.shared).forEach(n => watch(n.id));
   (window.LN.pairs() || []).filter(p => p.shared).forEach(p => watch(p.id));
+  (window.LN.journeys() || []).filter(j => j.mode === "online").forEach(j => watch(j.id));
 }
 
 function edit(id, path, value) {
@@ -151,9 +155,22 @@ async function join(id, code) {
     watch(id);
     return "dialog";
   }
+  if (data.kind === "journey") {
+    window.LN.addJourney({ id, mode: "online", created: Date.now() }, data);
+    watch(id);
+    return "journey";
+  }
   window.LN.addShared({ id, known: data.known, targetName: data.targetName, color: data.color, shared: true, created: Date.now() }, data);
   watch(id);
   return "notebook";
+}
+// Course journeys for two players online (same rules as shared notebooks), kind "journey".
+async function createJourney(id) {
+  const uid = state.user.uid;
+  const doc = { kind: "journey", owner: uid, members: [uid], memberInfo: { [uid]: me() }, inviteCode: newCode(), known: "de", targetName: "Arabisch-Reise", progress: {}, created: fb.serverTimestamp() };
+  await fb.setDoc(sref(id), doc);
+  window.LN.addJourney({ id, mode: "online", created: Date.now() }, { ...doc, created: null });
+  watch(id);
 }
 // Dialogue partners: stored like a shared notebook (same security rules), with kind "dialog".
 async function createPair(id, profile) {
@@ -183,7 +200,7 @@ window.LN.cloud = {
   ready: () => authKnown,
   uid: () => state.user ? state.user.uid : null,
   signIn: () => fb ? signIn() : alert(t("err")),
-  edit, share, join, leave, removeMember, resetInvite, deleteShared, createPair,
+  edit, share, join, leave, removeMember, resetInvite, deleteShared, createPair, createJourney,
 };
 
 async function signIn() {

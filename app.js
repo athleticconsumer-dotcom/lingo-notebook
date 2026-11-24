@@ -334,11 +334,12 @@ function viewJoin(id, code) {
   const have = nbById(id);
   if (have && have.shared) return (location.hash = `#/nb/${id}`);
   if (DialogUI.pairById(id)) return (location.hash = `#/dialog/${id}`);
+  if (Course.jById(id)) return (location.hash = `#/course/map/${id}`);
   const box = (inner) => app.innerHTML = `<div class="join"><img src="icons/icon-192.png" alt=""><h1>${L.joinTitle}</h1>${inner}</div>`;
   if (!LN.cloud || !LN.cloud.ready()) return box(`<p class="muted">${L.loading}</p>`);
   if (!myUid()) { box(`<p class="muted">${L.joinText}</p><button class="btn primary" id="joinIn">${L.signInBtn}</button>`); $("#joinIn").onclick = () => LN.cloud.signIn(); return; }
   box(`<p class="muted">${L.joining}</p>`);
-  LN.cloud.join(id, code).then(kind => { location.hash = kind === "dialog" ? `#/dialog/${id}` : `#/nb/${id}`; })
+  LN.cloud.join(id, code).then(kind => { location.hash = kind === "dialog" ? `#/dialog/${id}` : kind === "journey" ? `#/course/map/${id}` : `#/nb/${id}`; })
     .catch(e => { console.warn(e); box(`<p>${L.joinFail}</p><a class="btn" href="#/">← ${L.my}</a>`); });
 }
 window.addEventListener("ln-auth", () => { if (location.hash.startsWith("#/join/")) route(); else if (onHome()) viewHome(); });
@@ -535,7 +536,7 @@ $("#importFile").onchange = async e => {
 
 // ---------- Dialogue section (dialog.js) ----------
 DialogUI.init({ S: () => S, save, setBar, esc, $, app, myUid, modal, closeModal, colorFor });
-Course.init({ S: () => S, save, setBar, esc, $, app });
+Course.init({ S: () => S, save, setBar, esc, $, app, myUid, modal, closeModal });
 Games.init({ S: () => S, save, setBar, esc, $, app, myUid, D, word, topicName, lang: () => S.uiLang,
   topic: id => TOPICS.find(x => x.id === id), knownName: nb => (KNOWN.find(k => k.code === nb.known) || {}).native || nb.known });
 
@@ -573,6 +574,7 @@ window.LN = {
     Games.onShared(id);
   },
   removeShared(id) {
+    if (Course.jById(id)) { Course.removeJourney(id); save(); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/course"; return; }
     if (DialogUI.pairById(id)) { DialogUI.removePair(id); save(); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/dialog"; else route(); return; }
     if (!nbById(id)) return; removeNotebook(id); alert(L.removedMsg); if (location.hash.includes(id)) location.hash = "#/"; else route();
   },
@@ -585,6 +587,14 @@ window.LN = {
     DialogUI.refresh(id);
   },
   pairs: () => DialogUI.data().pairs,
+  journeys: () => Course.journeys(),
+  addJourney(j, data) { Course.addJourney(j); LN.applyJourney(j.id, data); },
+  applyJourney(id, data) {
+    const j = Course.jById(id); if (!j) return;
+    Object.assign(j, { mode: "online", owner: data.owner, members: data.members || [], memberInfo: data.memberInfo || {}, inviteCode: data.inviteCode || j.inviteCode, progress: data.progress || {} });
+    save(false, true);
+    Course.refresh(id);
+  },
 };
 
 route();

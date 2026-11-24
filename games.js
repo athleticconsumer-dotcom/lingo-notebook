@@ -146,13 +146,14 @@ function board(nb, duel) {
 }
 
 // ---------- Game engine ----------
-function start(src, kind, { mode, dir, seed, duelId }) {
+function start(src, kind, { mode, dir, seed, duelId, names }) {
   menuOpen = null;
   const nb = src.nb, tid = src.tid;
   const all = src.entries(), r = rng(seed);
   const show = e => dir ? { q: e.a, a: e.q } : { q: e.q, a: e.a };
   const p1 = mode === "hot" ? (myName(nb) === t("you") ? "Spieler 1" : myName(nb)) : myName(nb);
-  G = { src, nb, tid, kind, mode, dir, seed, duelId, players: mode === "hot" ? [{ name: p1, score: 0 }, { name: settings().p2 || "Spieler 2", score: 0 }] : [{ name: p1, score: 0 }],
+  const pl = names ? names.map(n => ({ name: n, score: 0 })) : mode === "hot" ? [{ name: p1, score: 0 }, { name: settings().p2 || "Spieler 2", score: 0 }] : [{ name: p1, score: 0 }];
+  G = { src, nb, tid, kind, mode, dir, seed, duelId, players: pl,
     turn: 0, i: 0, moves: 0, t0: Date.now(), ms: 0, done: false, answered: false };
   if (kind === "memory") {
     const pairs = shuffle(all, r).slice(0, Math.min(8, all.length)).map(show);
@@ -178,6 +179,7 @@ function start(src, kind, { mode, dir, seed, duelId }) {
 function finish() {
   G.done = true; G.ms = Date.now() - G.t0;
   if (G.mode === "duel") pushDuel();
+  if (G.src.onFinish) { const g = G; G = null; return g.src.onFinish({ players: g.players, total: g.total, ms: g.ms }); }
   render();
 }
 function header() {
@@ -198,7 +200,7 @@ function render() {
   C.setBar("");
   if (G.done) return renderEnd();
   C.app.innerHTML = `<div class="g-page play">${header()}<div id="gBody"></div></div>`;
-  C.$("#gQuit").onclick = () => { if (confirm(t("leaveQ"))) { const src = G.src; G = null; open(src); } };
+  C.$("#gQuit").onclick = () => { if (confirm(t("leaveQ"))) { const src = G.src; G = null; src.onQuit ? src.onQuit() : open(src); } };
   ({ memory: renderMemory, quiz: renderQuiz, write: renderWrite })[G.kind]();
 }
 const nextTurn = () => { if (G.mode === "hot") G.turn = 1 - G.turn; };
@@ -294,5 +296,5 @@ function onShared(id) {
   if (menuOpen && menuOpen.nb && menuOpen.nb.id === id && location.hash.includes("/play/")) open(menuOpen);
 }
 
-return { init(ctx) { C = ctx; }, view, open, onShared, isPlaying: () => !!G, entries, norm };
+return { init(ctx) { C = ctx; }, view, open, play: start, onShared, isPlaying: () => !!G, entries, norm };
 })();

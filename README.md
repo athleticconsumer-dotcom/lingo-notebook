@@ -16,6 +16,7 @@ A fill-in-the-blanks vocabulary notebook for any language, inspired by the Ultim
 - Backup and restore as a JSON file
 - Installable as an app (PWA) with its own icon, works offline
 - Google sign-in with Firestore sync (Firebase project lingo-notebook)
+- Arabic beginner course: journey map with unlockable lessons, stars, 1 or 2 players (same phone or online), Freemode
 - Mini games per topic (Memory, Quiz, Writing): alone, two players on one phone, or online duel in shared notebooks
 - Shared notebooks: invite friends with a link, write together live, see who wrote each entry (rules in `firestore.rules`)
 
