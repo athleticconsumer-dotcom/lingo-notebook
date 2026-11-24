@@ -338,6 +338,102 @@ window.COURSE = [
     ["صَدِيقٌ · زَمِيلٌ · أُسْتَاذٌ · زَوْجٌ", "Freund · Kollege · Lehrer · Ehemann", [{ d: "Freund", s: [["صَدِيقٌ", "n"]] }, { d: "Kollege", s: [["زَمِيلٌ", "n"]] }, { d: "Lehrer", s: [["أُسْتَاذٌ", "n"]] }, { d: "Ehemann", s: [["زَوْجٌ", "n"]] }]]
   ]
 }
+,
+{
+  n: 5, ar: "الدَّرْسُ الْخَامِسُ", de: "Dars 5: Wohnen, arbeiten, studieren", icon: "🏙️",
+  intro: "Das Präsens (الْمُضَارِع): ich wohne, du wohnst, er wohnt … mit سَكَنَ, عَمِلَ und دَرَسَ. Dazu: لَا vor dem Verb, Beruf im Akkusativ, Orte mit فِي und مَعَ, und „in welchem …?“ mit فِي أَيِّ.",
+
+  words: [
+    ["أَسْكُنُ", "ich wohne", "v"],
+    ["تَسْكُنُ / تَسْكُنِينَ", "du wohnst (m) / du wohnst (w)", "v"],
+    ["يَسْكُنُ / تَسْكُنُ", "er wohnt / sie wohnt", "v"],
+    ["أَعْمَلُ", "ich arbeite", "v"],
+    ["تَعْمَلُ / تَعْمَلِينَ", "du arbeitest (m) / du arbeitest (w)", "v"],
+    ["يَعْمَلُ / تَعْمَلُ", "er arbeitet / sie arbeitet", "v"],
+    ["أَدْرُسُ", "ich studiere, ich lerne", "v"],
+    ["تَدْرُسُ / تَدْرُسِينَ", "du studierst (m) / du studierst (w)", "v"],
+    ["يَدْرُسُ", "er studiert, er lernt", "v"],
+    ["لَا أَعْمَلُ", "ich arbeite nicht", "p"],
+    ["مُدِيرٌ", "Direktor, Leiter, Manager", "n"],
+    ["شَرِكَةٌ", "Firma", "n"],
+    ["أَعْمَلُ مُدِيرًا فِي شَرِكَةٍ", "Ich arbeite als Manager in einer Firma.", "v"],
+    ["جَامِعَةٌ / الْجَامِعَةُ", "eine Universität / die Universität", "n"],
+    ["مَدْرَسَةٌ / الْمَدْرَسَةُ", "eine Schule / die Schule", "n"],
+    ["مَسْجِدٌ / الْمَسْجِدُ", "eine Moschee / die Moschee", "n"],
+    ["مَعَ", "mit (zusammen mit)", "p"],
+    ["فِي أَيِّ بَلَدٍ؟", "in welchem Land?", "pr"],
+    ["بَلَدٌ", "Land", "n"],
+    ["مَدِينَةٌ", "Stadt", "n"],
+    ["حَيٌّ", "Stadtviertel", "n"],
+    ["هُنَاكَ", "dort", "pr"],
+    ["أَوْ", "oder", "p"],
+    ["جَمِيلٌ", "schön", "n"],
+    ["الْعَرَبِيَّةُ", "Arabisch (die arabische Sprache)", "n"],
+    ["فِي الْإِنْتَرْنَتْ", "im Internet", "n"],
+    ["صَدِيقَتِي", "meine Freundin (صَدِيقَة + ي)", "n"],
+    ["أُسْتَاذُكَ", "dein Lehrer", "n"],
+    ["لُنْدُن", "London", "n"],
+    ["الْأُرْدُنّ", "Jordanien", "n"]
+  ],
+
+  grammar: [
+    { title: "Das Präsens: Vorsilben zeigen die Person", ar: "أَ · تَ · تَ…ِينَ · يَ · تَ",
+      text: "Im Präsens (الْمُضَارِع) zeigt eine Vorsilbe, wer etwas tut: أَـ = ich, تَـ = du (m), تَـ…ِينَ = du (w), يَـ = er, تَـ = sie. Achtung: تَسْكُنُ heißt sowohl „du wohnst“ (m) als auch „sie wohnt“.",
+      rows: [["أَنَا", "ich", "أَسْكُنُ · أَعْمَلُ · أَدْرُسُ"], ["أَنْتَ", "du (m)", "تَسْكُنُ · تَعْمَلُ · تَدْرُسُ"], ["أَنْتِ", "du (w)", "تَسْكُنِينَ · تَعْمَلِينَ · تَدْرُسِينَ"],
+        ["هُوَ", "er", "يَسْكُنُ · يَعْمَلُ · يَدْرُسُ"], ["هِيَ", "sie", "تَسْكُنُ · تَعْمَلُ · تَدْرُسُ"]] },
+    { title: "Verneinung beim Verb: لَا", ar: "أَنَا لَا أَعْمَلُ",
+      text: "Vor ein Verb im Präsens stellt man لَا: أَنَا لَا أَعْمَلُ = Ich arbeite nicht. (Bei Sätzen ohne Verb nimmt man لَيْسَ, siehe Dars 4.)",
+      rows: [["أَعْمَلُ", "→ لَا أَعْمَلُ", "ich arbeite nicht"], ["يَسْكُنُ هُنَا", "→ لَا يَسْكُنُ هُنَا", "er wohnt nicht hier"]] },
+    { title: "„Ich arbeite als …“: Beruf im Akkusativ", ar: "أَعْمَلُ مُدِيرًا فِي شَرِكَةٍ",
+      text: "Nach أَعْمَلُ steht der Beruf im Akkusativ (ـً), so wie es der Pfeil auf der Tafel zeigt.",
+      rows: [["مُدِيرٌ", "→ أَعْمَلُ مُدِيرًا", "ich arbeite als Manager"], ["مُدَرِّسَةٌ", "→ أَعْمَلُ مُدَرِّسَةً", "ich arbeite als Lehrerin"]] },
+    { title: "Wo? Orte mit فِي und „mit“ مَعَ", ar: "فِي الْجَامِعَةِ · فِي الْمَدْرَسَةِ · فِي الْمَسْجِدِ · مَعَ خَاسُو",
+      text: "Nach فِي steht das Wort im Genitiv (ـِ, unbestimmt ـٍ): فِي الْجَامِعَةِ, فِي شَرِكَةٍ. مَعَ heißt „mit, zusammen mit“.",
+      rows: [["فِي الْجَامِعَةِ", "an der Universität", ""], ["فِي الْمَدْرَسَةِ", "in der Schule", ""], ["فِي الْمَسْجِدِ", "in der Moschee", ""], ["مَعَ خَاسُو", "mit Khāsū", ""]] },
+    { title: "In welchem …? فِي أَيِّ", ar: "فِي أَيِّ بَلَدٍ / مَدِينَةٍ / حَيٍّ؟",
+      text: "أَيُّ = welcher. Das Wort danach steht im Genitiv mit Tanwīn ـٍ.",
+      rows: [["فِي أَيِّ بَلَدٍ؟", "in welchem Land?", ""], ["فِي أَيِّ مَدِينَةٍ؟", "in welcher Stadt?", ""], ["فِي أَيِّ حَيٍّ؟", "in welchem Viertel?", ""]] }
+  ],
+
+  // Dialogue from the blackboard: A = الزَّمِيل, B = الزَّمِيلَة
+  people: [["الزَّمِيل", "Kollege"], ["الزَّمِيلَة", "Kollegin"]],
+  dialog: [
+    ["A", "أَيْنَ تَسْكُنِينَ يَا زَيْنَبُ؟", "Wo wohnst du, Zainab?", [
+      { d: "wo?", s: [["أَيْنَ", "pr"]] }, { d: "wohnst du (w)", s: [["تَسْكُنِينَ", "v"]] }, { d: "o (Anrede)", s: [["يَا", "p"]] }, { d: "Zainab", s: [["زَيْنَبُ", "n"]] }]],
+    ["B", "أَسْكُنُ فِي لُنْدُن، وَأَيْنَ تَسْكُنُ أَنْتَ؟", "Ich wohne in London, und wo wohnst du?", [
+      { d: "ich wohne", s: [["أَسْكُنُ", "v"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "London", s: [["لُنْدُن", "n"]] }, { d: "und wo?", s: [["وَ", "p"], ["أَيْنَ", "pr"]] }, { d: "wohnst du (m)", s: [["تَسْكُنُ", "v"]] }, { d: "du", s: [["أَنْتَ", "pr"]] }]],
+    ["A", "أَنَا أَيْضًا أَسْكُنُ فِي لُنْدُن، فِي حَيِّ مَيْفَيْر.", "Ich wohne auch in London, im Viertel Mayfair.", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "auch", s: [["أَيْضًا", "n"]] }, { d: "ich wohne", s: [["أَسْكُنُ", "v"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "London", s: [["لُنْدُن", "n"]] },
+      { d: "in", s: [["فِي", "p"]] }, { d: "Viertel", s: [["حَيِّ", "n"]] }, { d: "Mayfair", s: [["مَيْفَيْر", "n"]] }]],
+    ["B", "أَخِي أَيْضًا يَسْكُنُ فِي هَذَا الْحَيِّ.", "Mein Bruder wohnt auch in diesem Viertel.", [
+      { d: "mein Bruder", s: [["أَخِ", "n"], ["ي", "pr"]] }, { d: "auch", s: [["أَيْضًا", "n"]] }, { d: "er wohnt", s: [["يَسْكُنُ", "v"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "diesem", s: [["هَذَا", "pr"]] }, { d: "dem Viertel", s: [["الْحَيِّ", "n"]] }]],
+    ["A", "هَلْ تَعْمَلِينَ أَوْ تَدْرُسِينَ؟", "Arbeitest du oder studierst du?", [
+      { d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "arbeitest du (w)", s: [["تَعْمَلِينَ", "v"]] }, { d: "oder", s: [["أَوْ", "p"]] }, { d: "studierst du (w)", s: [["تَدْرُسِينَ", "v"]] }]],
+    ["B", "أَنَا أَعْمَلُ مُدَرِّسَةً فِي الْمَدْرَسَةِ، وَأَنْتَ؟", "Ich arbeite als Lehrerin in der Schule, und du?", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "ich arbeite", s: [["أَعْمَلُ", "v"]] }, { d: "als Lehrerin", s: [["مُدَرِّسَةً", "n"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "der Schule", s: [["الْمَدْرَسَةِ", "n"]] }, { d: "und du (m)?", s: [["وَ", "p"], ["أَنْتَ", "pr"]] }]],
+    ["A", "أَنَا لَا أَعْمَلُ، أَنَا أَدْرُسُ فِي الْجَامِعَةِ.", "Ich arbeite nicht, ich studiere an der Universität.", [
+      { d: "ich", s: [["أَنَا", "pr"]] }, { d: "nicht", s: [["لَا", "p"]] }, { d: "ich arbeite", s: [["أَعْمَلُ", "v"]] }, { d: "ich", s: [["أَنَا", "pr"]] }, { d: "ich studiere", s: [["أَدْرُسُ", "v"]] }, { d: "in, an", s: [["فِي", "p"]] }, { d: "der Universität", s: [["الْجَامِعَةِ", "n"]] }]],
+    ["B", "جَمِيلٌ، وَهَلْ تَدْرُسُ الْعَرَبِيَّةَ هُنَاكَ؟", "Schön, und studierst du dort Arabisch?", [
+      { d: "schön", s: [["جَمِيلٌ", "n"]] }, { d: "und (Frage)", s: [["وَ", "p"], ["هَلْ", "p"]] }, { d: "studierst du (m)", s: [["تَدْرُسُ", "v"]] }, { d: "Arabisch", s: [["الْعَرَبِيَّةَ", "n"]] }, { d: "dort", s: [["هُنَاكَ", "pr"]] }]],
+    ["A", "لَا، أَدْرُسُ الْعَرَبِيَّةَ فِي الْإِنْتَرْنَتْ مَعَ خَاسُو.", "Nein, ich lerne Arabisch im Internet mit Khāsū.", [
+      { d: "nein", s: [["لَا", "p"]] }, { d: "ich lerne", s: [["أَدْرُسُ", "v"]] }, { d: "Arabisch", s: [["الْعَرَبِيَّةَ", "n"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "dem Internet", s: [["الْإِنْتَرْنَتْ", "n"]] }, { d: "mit", s: [["مَعَ", "p"]] }, { d: "Khāsū", s: [["خَاسُو", "n"]] }]],
+    ["B", "فِي أَيِّ بَلَدٍ يَسْكُنُ أُسْتَاذُكَ خَاسُو؟", "In welchem Land wohnt dein Lehrer Khāsū?", [
+      { d: "in", s: [["فِي", "p"]] }, { d: "welchem", s: [["أَيِّ", "pr"]] }, { d: "Land", s: [["بَلَدٍ", "n"]] }, { d: "er wohnt", s: [["يَسْكُنُ", "v"]] }, { d: "dein Lehrer", s: [["أُسْتَاذُ", "n"], ["كَ", "pr"]] }, { d: "Khāsū", s: [["خَاسُو", "n"]] }]],
+    ["A", "خَاسُو يَسْكُنُ فِي الْأُرْدُنِّ وَيَدْرُسُ هُنَاكَ.", "Khāsū wohnt in Jordanien und studiert dort.", [
+      { d: "Khāsū", s: [["خَاسُو", "n"]] }, { d: "er wohnt", s: [["يَسْكُنُ", "v"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "Jordanien", s: [["الْأُرْدُنِّ", "n"]] }, { d: "und er studiert", s: [["وَ", "p"], ["يَدْرُسُ", "v"]] }, { d: "dort", s: [["هُنَاكَ", "pr"]] }]],
+    ["B", "صَدِيقَتِي أَيْضًا تَسْكُنُ فِي الْأُرْدُنِّ.", "Meine Freundin wohnt auch in Jordanien.", [
+      { d: "meine Freundin", s: [["صَدِيقَتِ", "n"], ["ي", "pr"]] }, { d: "auch", s: [["أَيْضًا", "n"]] }, { d: "sie wohnt", s: [["تَسْكُنُ", "v"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "Jordanien", s: [["الْأُرْدُنِّ", "n"]] }]]
+  ],
+
+  extra: [
+    ["أَسْكُنُ · تَسْكُنُ · تَسْكُنِينَ · يَسْكُنُ · تَسْكُنُ", "ich wohne · du wohnst (m) · du wohnst (w) · er wohnt · sie wohnt", [{ d: "ich wohne", s: [["أَسْكُنُ", "v"]] }, { d: "du wohnst (m)", s: [["تَسْكُنُ", "v"]] }, { d: "du wohnst (w)", s: [["تَسْكُنِينَ", "v"]] }, { d: "er wohnt", s: [["يَسْكُنُ", "v"]] }, { d: "sie wohnt", s: [["تَسْكُنُ", "v"]] }]],
+    ["أَعْمَلُ · تَعْمَلُ · يَعْمَلُ · تَعْمَلُ", "ich arbeite · du arbeitest (m) · er arbeitet · sie arbeitet", [{ d: "ich arbeite", s: [["أَعْمَلُ", "v"]] }, { d: "du arbeitest (m)", s: [["تَعْمَلُ", "v"]] }, { d: "er arbeitet", s: [["يَعْمَلُ", "v"]] }, { d: "sie arbeitet", s: [["تَعْمَلُ", "v"]] }]],
+    ["أَعْمَلُ مُدِيرًا فِي شَرِكَةٍ.", "Ich arbeite als Manager in einer Firma.", [{ d: "ich arbeite", s: [["أَعْمَلُ", "v"]] }, { d: "als Manager", s: [["مُدِيرًا", "n"]] }, { d: "in", s: [["فِي", "p"]] }, { d: "einer Firma", s: [["شَرِكَةٍ", "n"]] }]],
+    ["أَدْرُسُ فِي الْجَامِعَةِ · فِي الْمَدْرَسَةِ · فِي الْمَسْجِدِ", "Ich lerne an der Universität · in der Schule · in der Moschee", [{ d: "ich lerne", s: [["أَدْرُسُ", "v"]] }, { d: "an der Uni", s: [["فِي", "p"], [" ", "p"], ["الْجَامِعَةِ", "n"]] }, { d: "in der Schule", s: [["فِي", "p"], [" ", "p"], ["الْمَدْرَسَةِ", "n"]] }, { d: "in der Moschee", s: [["فِي", "p"], [" ", "p"], ["الْمَسْجِدِ", "n"]] }]],
+    ["أَدْرُسُ مَعَ خَاسُو.", "Ich lerne mit Khāsū.", [{ d: "ich lerne", s: [["أَدْرُسُ", "v"]] }, { d: "mit", s: [["مَعَ", "p"]] }, { d: "Khāsū", s: [["خَاسُو", "n"]] }]],
+    ["فِي أَيِّ بَلَدٍ / مَدِينَةٍ / حَيٍّ؟", "In welchem Land / welcher Stadt / welchem Viertel?", [{ d: "in", s: [["فِي", "p"]] }, { d: "welchem", s: [["أَيِّ", "pr"]] }, { d: "Land", s: [["بَلَدٍ", "n"]] }, { d: "Stadt", s: [["مَدِينَةٍ", "n"]] }, { d: "Viertel", s: [["حَيٍّ", "n"]] }]]
+  ]
+}
 ];
 
 window.COURSE_TYPES = {
