@@ -249,6 +249,95 @@ window.COURSE = [
     ["مُهَنْدِسٌ · طَالِبٌ · طَبِيبٌ · مُدَرِّسٌ", "Ingenieur · Student · Arzt · Lehrer", [{ d: "Ingenieur", s: [["مُهَنْدِسٌ", "n"]] }, { d: "Student", s: [["طَالِبٌ", "n"]] }, { d: "Arzt", s: [["طَبِيبٌ", "n"]] }, { d: "Lehrer", s: [["مُدَرِّسٌ", "n"]] }]]
   ]
 }
+,
+{
+  n: 4, ar: "الدَّرْسُ الرَّابِعُ", de: "Dars 4: Er, sie, sein, ihr", icon: "👥",
+  intro: "هُوَ und هِيَ, die Endungen ـهُ (sein) und ـهَا (ihr), لَيْسَ in allen Formen, هَذَا / هَذِهِ, مَنْ (wer?), أَيْضًا (auch) und Personen: Mann, Frau, Freund, Kollege, Lehrer, Ehepartner.",
+
+  words: [
+    ["هُوَ", "er", "pr"],
+    ["هِيَ", "sie", "pr"],
+    ["أَنْتِ", "du (zu einer Frau)", "pr"],
+    ["مَنْ؟", "wer?", "pr"],
+    ["هَذَا / هَذِهِ", "dies, das (männlich) / dies, das (weiblich)", "pr"],
+    ["أَيْضًا", "auch", "n"],
+    ["رَجُلٌ / الرَّجُلُ", "ein Mann / der Mann", "n"],
+    ["اِمْرَأَةٌ / الْمَرْأَةُ", "eine Frau / die Frau", "n"],
+    ["صَدِيقٌ", "Freund", "n"],
+    ["زَمِيلٌ", "Kollege, Mitschüler", "n"],
+    ["زَمِيلِي", "mein Kollege, mein Mitschüler", "n"],
+    ["أُسْتَاذٌ / أُسْتَاذَةٌ", "Lehrer, Professor / Lehrerin, Professorin", "n"],
+    ["زَوْجٌ / زَوْجَةٌ", "Ehemann / Ehefrau", "n"],
+    ["زَوْجَتُهُ", "seine Ehefrau", "n"],
+    ["اِسْمُهُ / اِسْمُهَا", "sein Name / ihr Name", "n"],
+    ["جِنْسِيَّتُهُ", "seine Nationalität", "n"],
+    ["لَسْتَ / لَسْتِ", "du bist nicht (m) / du bist nicht (w)", "v"],
+    ["لَيْسَ / لَيْسَتْ", "er ist nicht / sie ist nicht", "v"],
+    ["بَاكِسْتَانِيٌّ", "Pakistaner", "n"],
+    ["أَمْرِيكَا", "Amerika", "n"],
+    ["مَنْ هَذَا الرَّجُلُ؟", "Wer ist dieser Mann?", "pr"],
+    ["وَمَنْ هَذِهِ الْمَرْأَةُ؟", "Und wer ist diese Frau?", "pr"]
+  ],
+
+  grammar: [
+    { title: "Die Personalpronomen", ar: "أَنَا · أَنْتَ · أَنْتِ · هُوَ · هِيَ",
+      rows: [["أَنَا", "ich", ""], ["أَنْتَ", "du (zu einem Mann)", ""], ["أَنْتِ", "du (zu einer Frau)", ""], ["هُوَ", "er", "هُوَ بَاكِسْتَانِيٌّ"], ["هِيَ", "sie", "هِيَ أُسْتَاذَةٌ"]] },
+    { title: "Die Besitz-Endungen", ar: "اِسْم + ي · كَ · كِ · هُ · هَا",
+      text: "Zu ـِي (mein) und ـكَ / ـكِ (dein) aus Dars 1 kommen jetzt ـهُ (sein) und ـهَا (ihr) dazu.",
+      rows: [["ـِي", "mein", "اِسْمِي"], ["ـُكَ", "dein (m)", "اِسْمُكَ"], ["ـُكِ", "dein (w)", "اِسْمُكِ"], ["ـُهُ", "sein", "اِسْمُهُ · جِنْسِيَّتُهُ · زَوْجَتُهُ"], ["ـُهَا", "ihr", "اِسْمُهَا"]] },
+    { title: "لَيْسَ in allen Formen", ar: "لَسْتُ · لَسْتَ · لَسْتِ · لَيْسَ · لَيْسَتْ",
+      text: "لَيْسَ heißt „ist nicht“ und ändert sich je nach Person. Steht danach ein Nomen oder Adjektiv, kommt es in den Akkusativ (ـً): لَيْسَتْ طَالِبَةً. Nach مِنْ bleibt alles gleich: هُوَ لَيْسَ مِنْ أَمْرِيكَا.",
+      rows: [["لَسْتُ", "ich bin nicht", "لَسْتُ مُتَزَوِّجًا"], ["لَسْتَ", "du bist nicht (m)", "لَسْتَ طَالِبًا"], ["لَسْتِ", "du bist nicht (w)", "لَسْتِ طَالِبَةً"],
+        ["لَيْسَ", "er ist nicht", "هُوَ لَيْسَ مِنْ أَمْرِيكَا"], ["لَيْسَتْ", "sie ist nicht", "لَيْسَتْ طَالِبَةً"]] },
+    { title: "هَذَا · هَذِهِ und مَنْ / مَا", ar: "مَنْ هَذَا؟ · مَا هَذَا؟",
+      text: "هَذَا für männliche, هَذِهِ für weibliche Wörter. مَنْ fragt nach Personen (wer?), مَا nach Dingen (was?). Mit ال danach heißt es „dieser / diese …“.",
+      rows: [["مَا هَذَا؟", "Was ist das?", "هَذَا كِتَابٌ"], ["مَنْ هَذَا الرَّجُلُ؟", "Wer ist dieser Mann?", "هَذَا الرَّجُلُ زَمِيلِي"], ["مَنْ هَذِهِ الْمَرْأَةُ؟", "Wer ist diese Frau?", "هَذِهِ زَوْجَتُهُ"]] },
+    { title: "رَجُلٌ und اِمْرَأَةٌ mit ال", ar: "الرَّجُلُ · الْمَرْأَةُ",
+      text: "ر ist ein Sonnenbuchstabe: ar-radschulu (das ل wird nicht gesprochen). Bei اِمْرَأَةٌ fällt mit ال der Anfangsbuchstabe ا weg: الْمَرْأَةُ (al-marʾatu).",
+      rows: [["رَجُلٌ", "→ الرَّجُلُ", "der Mann"], ["اِمْرَأَةٌ", "→ الْمَرْأَةُ", "die Frau"]] },
+    { title: "Personen", ar: "صَدِيقٌ · زَمِيلٌ · أُسْتَاذٌ · زَوْجٌ",
+      text: "Mit ة werden sie weiblich, mit ـِي / ـُكَ / ـُهُ / ـُهَا bekommen sie einen Besitzer.",
+      rows: [["صَدِيقٌ", "Freund", "صَدِيقَةٌ · صَدِيقِي"], ["زَمِيلٌ", "Kollege, Mitschüler", "زَمِيلَةٌ · زَمِيلِي"], ["أُسْتَاذٌ", "Lehrer, Professor", "أُسْتَاذَةٌ · يَا أُسْتَاذُ"], ["زَوْجٌ", "Ehemann", "زَوْجَةٌ · زَوْجَتُهُ"]] }
+  ],
+
+  // Dialogue from the blackboard: A = الْمُدَرِّس, B = الطَّالِب
+  people: [["الْمُدَرِّس", "Lehrer"], ["الطَّالِب", "Schüler"]],
+  dialog: [
+    ["A", "مَا هَذَا؟", "Was ist das?", [
+      { d: "was?", s: [["مَا", "pr"]] }, { d: "das", s: [["هَذَا", "pr"]] }]],
+    ["B", "هَذَا كِتَابٌ يَا أُسْتَاذُ.", "Das ist ein Buch, Ustādh (Lehrer).", [
+      { d: "das", s: [["هَذَا", "pr"]] }, { d: "ein Buch", s: [["كِتَابٌ", "n"]] }, { d: "o (Anrede)", s: [["يَا", "p"]] }, { d: "Lehrer", s: [["أُسْتَاذُ", "n"]] }]],
+    ["A", "مَنْ هَذَا الرَّجُلُ؟", "Wer ist dieser Mann?", [
+      { d: "wer?", s: [["مَنْ", "pr"]] }, { d: "dieser", s: [["هَذَا", "pr"]] }, { d: "der Mann", s: [["الرَّجُلُ", "n"]] }]],
+    ["B", "هَذَا الرَّجُلُ زَمِيلِي.", "Dieser Mann ist mein Kollege (Mitschüler).", [
+      { d: "dieser", s: [["هَذَا", "pr"]] }, { d: "der Mann", s: [["الرَّجُلُ", "n"]] }, { d: "mein Kollege", s: [["زَمِيلِ", "n"], ["ي", "pr"]] }]],
+    ["A", "هَلْ هُوَ أَيْضًا مِنْ أَمْرِيكَا؟", "Ist er auch aus Amerika?", [
+      { d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "er", s: [["هُوَ", "pr"]] }, { d: "auch", s: [["أَيْضًا", "n"]] }, { d: "aus", s: [["مِنْ", "p"]] }, { d: "Amerika", s: [["أَمْرِيكَا", "n"]] }]],
+    ["B", "لَا، هُوَ لَيْسَ مِنْ أَمْرِيكَا.", "Nein, er ist nicht aus Amerika.", [
+      { d: "nein", s: [["لَا", "p"]] }, { d: "er", s: [["هُوَ", "pr"]] }, { d: "ist nicht", s: [["لَيْسَ", "v"]] }, { d: "aus", s: [["مِنْ", "p"]] }, { d: "Amerika", s: [["أَمْرِيكَا", "n"]] }]],
+    ["A", "مَا جِنْسِيَّتُهُ؟", "Was ist seine Nationalität?", [
+      { d: "was?", s: [["مَا", "pr"]] }, { d: "seine Nationalität", s: [["جِنْسِيَّتُ", "n"], ["هُ", "pr"]] }]],
+    ["B", "هُوَ بَاكِسْتَانِيٌّ. اِسْمُهُ عُمَر.", "Er ist Pakistaner. Sein Name ist ʿUmar.", [
+      { d: "er", s: [["هُوَ", "pr"]] }, { d: "Pakistaner", s: [["بَاكِسْتَانِيٌّ", "n"]] }, { d: "sein Name", s: [["اِسْمُ", "n"], ["هُ", "pr"]] }, { d: "ʿUmar", s: [["عُمَر", "n"]] }]],
+    ["A", "وَمَنْ هَذِهِ الْمَرْأَةُ؟", "Und wer ist diese Frau?", [
+      { d: "und wer?", s: [["وَ", "p"], ["مَنْ", "pr"]] }, { d: "diese", s: [["هَذِهِ", "pr"]] }, { d: "die Frau", s: [["الْمَرْأَةُ", "n"]] }]],
+    ["B", "هَذِهِ زَوْجَتُهُ، اِسْمُهَا عَائِشَة.", "Das ist seine Ehefrau, ihr Name ist ʿĀʾischa.", [
+      { d: "das (w)", s: [["هَذِهِ", "pr"]] }, { d: "seine Ehefrau", s: [["زَوْجَتُ", "n"], ["هُ", "pr"]] }, { d: "ihr Name", s: [["اِسْمُ", "n"], ["هَا", "pr"]] }, { d: "ʿĀʾischa", s: [["عَائِشَة", "n"]] }]],
+    ["A", "هَلْ هِيَ أَيْضًا طَالِبَةٌ؟", "Ist sie auch Studentin?", [
+      { d: "Ja/Nein-Frage", s: [["هَلْ", "p"]] }, { d: "sie", s: [["هِيَ", "pr"]] }, { d: "auch", s: [["أَيْضًا", "n"]] }, { d: "Studentin", s: [["طَالِبَةٌ", "n"]] }]],
+    ["B", "لَا، لَيْسَتْ طَالِبَةً، هِيَ أُسْتَاذَةٌ.", "Nein, sie ist keine Studentin, sie ist Lehrerin (Ustādha).", [
+      { d: "nein", s: [["لَا", "p"]] }, { d: "sie ist nicht", s: [["لَيْسَتْ", "v"]] }, { d: "Studentin (Akk.)", s: [["طَالِبَةً", "n"]] }, { d: "sie", s: [["هِيَ", "pr"]] }, { d: "Lehrerin", s: [["أُسْتَاذَةٌ", "n"]] }]]
+  ],
+
+  extra: [
+    ["أَنَا · أَنْتِ · هُوَ · هِيَ", "ich · du (w) · er · sie", [{ d: "ich", s: [["أَنَا", "pr"]] }, { d: "du (w)", s: [["أَنْتِ", "pr"]] }, { d: "er", s: [["هُوَ", "pr"]] }, { d: "sie", s: [["هِيَ", "pr"]] }]],
+    ["اِسْمِي · اِسْمُكِ · اِسْمُهُ · اِسْمُهَا", "mein · dein (w) · sein · ihr Name", [{ d: "mein Name", s: [["اِسْمِ", "n"], ["ي", "pr"]] }, { d: "dein Name (w)", s: [["اِسْمُ", "n"], ["كِ", "pr"]] }, { d: "sein Name", s: [["اِسْمُ", "n"], ["هُ", "pr"]] }, { d: "ihr Name", s: [["اِسْمُ", "n"], ["هَا", "pr"]] }]],
+    ["لَسْتُ · لَسْتِ · لَيْسَ · لَيْسَتْ", "ich bin nicht · du (w) bist nicht · er ist nicht · sie ist nicht", [{ d: "ich bin nicht", s: [["لَسْ", "v"], ["تُ", "pr"]] }, { d: "du (w) bist nicht", s: [["لَسْ", "v"], ["تِ", "pr"]] }, { d: "er ist nicht", s: [["لَيْسَ", "v"]] }, { d: "sie ist nicht", s: [["لَيْسَتْ", "v"]] }]],
+    ["هَذَا · هَذِهِ · مَنْ · أَيْضًا", "dies (m) · dies (w) · wer? · auch", [{ d: "dies (m)", s: [["هَذَا", "pr"]] }, { d: "dies (w)", s: [["هَذِهِ", "pr"]] }, { d: "wer?", s: [["مَنْ", "pr"]] }, { d: "auch", s: [["أَيْضًا", "n"]] }]],
+    ["رَجُلٌ · اِمْرَأَةٌ", "Mann · Frau", [{ d: "Mann", s: [["رَجُلٌ", "n"]] }, { d: "Frau", s: [["اِمْرَأَةٌ", "n"]] }]],
+    ["صَدِيقٌ · زَمِيلٌ · أُسْتَاذٌ · زَوْجٌ", "Freund · Kollege · Lehrer · Ehemann", [{ d: "Freund", s: [["صَدِيقٌ", "n"]] }, { d: "Kollege", s: [["زَمِيلٌ", "n"]] }, { d: "Lehrer", s: [["أُسْتَاذٌ", "n"]] }, { d: "Ehemann", s: [["زَوْجٌ", "n"]] }]]
+  ]
+}
 ];
 
 window.COURSE_TYPES = {
